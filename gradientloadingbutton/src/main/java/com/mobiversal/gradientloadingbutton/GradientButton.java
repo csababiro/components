@@ -47,17 +47,10 @@ public class GradientButton extends AppCompatButton {
 
     private void extractViewAttributes(@NonNull Context context, @NonNull AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GradientLoadingButton);
-        int defaultColor = getTextColors().getDefaultColor();
-        if (typedArray != null) {
-            gradientStartColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientStartColorGLB, defaultColor);
-            gradientCenterColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientCenterColorGLB, defaultColor);
-            gradientEndColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientEndColorGLB, defaultColor);
-            typedArray.recycle();
-        } else {
-            gradientStartColor = defaultColor;
-            gradientCenterColor = defaultColor;
-            gradientEndColor = defaultColor;
-        }
+        gradientStartColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientStartColorGLB, 0);
+        gradientCenterColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientCenterColorGLB, 0);
+        gradientEndColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientEndColorGLB, 0);
+        typedArray.recycle();
     }
 
     @Override
@@ -84,7 +77,10 @@ public class GradientButton extends AppCompatButton {
         else {
             float lineHeight = getLineHeight();
             GradientInterval interval = getGradientIntervalByGravity();
-            Shader shader = new LinearGradient(interval.getStartX(), 0f, interval.getEndX(), lineHeight, new int[]{gradientStartColor, gradientCenterColor, gradientEndColor}, null, Shader.TileMode.CLAMP);
+            int[] gradients = new int[]{gradientStartColor, gradientCenterColor, gradientEndColor};
+            if (gradientCenterColor == 0)
+                gradients = new int[]{gradientStartColor, gradientEndColor};
+            Shader shader = new LinearGradient(interval.getStartX(), 0f, interval.getEndX(), lineHeight, gradients, null, Shader.TileMode.CLAMP);
             getPaint().setShader(shader);
         }
     }

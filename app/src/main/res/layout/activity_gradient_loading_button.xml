@@ -59,9 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Gradient example"
-            app:buttonGradientCenterColorGLB="@android:color/holo_blue_light"
-            app:buttonGradientEndColorGLB="@android:color/holo_green_dark"
-            app:buttonGradientStartColorGLB="@android:color/holo_purple"
+            app:buttonGradientEndColorGLB="@color/btnGradientEnd"
+            app:buttonGradientStartColorGLB="@color/btnGradientStart"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/glbtn_four"
             app:textGLB="@string/button_loading_view"/>
