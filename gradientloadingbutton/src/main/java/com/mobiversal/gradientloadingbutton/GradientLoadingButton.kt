@@ -55,10 +55,9 @@ class GradientLoadingButton @JvmOverloads constructor(context: Context, val attr
             val loadingDrawableResourceId = typedArray.getResourceId(R.styleable.GradientLoadingButton_loadingDrawableGLB, 0)
             disabledTextColorResourceId = typedArray.getColor(R.styleable.GradientLoadingButton_disabledTextColorGLB, 0)
 //            val textGravityloadingDrawableResourceId = typedArray.getResourceId(R.styleable.ButtonLoadingView_textSizeBLV, 0)
-            val defaultColor: Int = Color.WHITE
-            gradientStartColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientStartColorGLB, defaultColor)
-            gradientCenterColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientCenterColorGLB, defaultColor)
-            gradientEndColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientEndColorGLB, defaultColor)
+            gradientStartColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientStartColorGLB, 0)
+            gradientCenterColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientCenterColorGLB, 0)
+            gradientEndColor = typedArray.getColor(R.styleable.GradientLoadingButton_buttonGradientEndColorGLB, 0)
 
 
             if (titleResourceId != 0)
