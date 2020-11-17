@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">ComponentsDemo</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Csabi components demo</string>
+    <string name="nav_header_subtitle">Enjoy it</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Components menu -->
+    <string name="menu_spannable_checkbox">Spannable checkbox</string>
+    <string name="menu_loading_views">Loading views</string>
+    <string name="menu_search_bar">Search bar</string>
+    <string name="menu_interval_picker">Interval picker</string>
+    <string name="menu_gradient_text_view">Gradient textview</string>
+    <string name="menu_gradient_button">Gradient button</string>
+    <string name="menu_popup_window_custom">Popup window custom</string>
+    <string name="menu_kotlin_extensions">Kotlin extensions</string>
+    <string name="menu_gradient_loading_button">Gradient loading button</string>
+
+    <!-- Screen titles -->
+    <string name="title_activity_main">Components Demo</string>
+    <string name="title_activity_spannable_checkbox">SpannalbeCheckBoxActivity</string>
+    <string name="title_activity_loading_views">LoadingViewsActivity</string>
+    <string name="title_activity_search_bar">SearchBarActivity</string>
+    <string name="title_activity_interval_picker">IntervalPickerActivity</string>
+    <string name="title_activity_gradient_text_view">GradientTextViewActivity</string>
+    <string name="title_activity_gradient_button">GradientButtonActivity</string>
+    <string name="title_activity_popup_window_custom">PopupWindowCustomActivity</string>
+    <string name="title_activity_kotlin_extensions">KotlinExtensionsActivity</string>
+
+    <!-- Loading screen -->
+    <string name="button_loading_view">ButtonLoadingView</string>
+
+</resources>

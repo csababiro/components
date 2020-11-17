@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="GradientLoadingButton">
+        <attr name="textGLB" format="reference" />
+        <attr name="backgroundGLB" format="reference" />
+        <attr name="textSizeGLB" format="reference" />
+        <attr name="textColorGLB" format="reference" />
+        <attr name="fontFamilyGLB" format="reference" />
+        <attr name="textGravityGLB" format="reference" />
+        <attr name="loadingDrawableGLB" format="reference" />
+        <attr name="enabledGLB" format="boolean" />
+        <attr name="drawableStartGLB" format="reference" />
+        <attr name="disabledTextColorGLB" format="reference" />
+        <attr name="buttonGradientStartColorGLB" format="color" />
+        <attr name="buttonGradientCenterColorGLB" format="color" />
+        <attr name="buttonGradientEndColorGLB" format="color" />
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".GradientTextViewActivity">
+
+    <com.mobiversal.gradienttextview.GradientTextView
+            android:id="@+id/gtxt_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gradient example"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textGradientStartColor="@android:color/holo_blue_dark"
+            app:textGradientCenterColor="@android:color/holo_blue_light"
+            app:textGradientEndColor="@android:color/holo_blue_bright"
+            android:gravity="center"
+            android:includeFontPadding="false"/>
+
+    <com.mobiversal.gradienttextview.GradientTextView
+            android:id="@+id/gtxt_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gradient example"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gtxt_one"
+            app:textGradientStartColor="@android:color/holo_red_dark"
+            app:textGradientEndColor="@android:color/holo_red_light"
+            android:gravity="end"/>
+
+    <com.mobiversal.gradienttextview.GradientTextView
+            android:id="@+id/gtxt_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gradient example"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gtxt_two"
+            app:textGradientStartColor="@android:color/holo_green_dark"
+            app:textGradientEndColor="@android:color/holo_green_light"/>
+
+    <com.mobiversal.gradienttextview.GradientTextView
+            android:id="@+id/gtxt_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gradient example"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gtxt_three"
+            app:textGradientStartColor="@android:color/holo_green_light"
+            app:textGradientCenterColor="@android:color/holo_blue_light"
+            app:textGradientEndColor="@android:color/holo_orange_light"/>
+
+    <com.mobiversal.gradienttextview.GradientTextView
+            android:id="@+id/gtxt_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gradient example"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gtxt_four"
+            app:textGradientStartColor="@android:color/holo_purple"
+            app:textGradientCenterColor="@android:color/holo_blue_light"
+            app:textGradientEndColor="@android:color/holo_green_dark"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#bebebe</color>
+    <color name="colorAccent">#f10173</color>
+
+    <!-- Crop video screen -->
+    <color name="crop_video_separator">#d8dadd</color>
+
+    <!-- Tabor app -->
+    <color name="colorPrimaryTaborApp">@color/green</color>
+    <color name="green">#03b74b</color>
+    <color name="edit_text_error_red">#ff4048</color>
+    <color name="number_picker_divider">#f6f6f6</color>
+    <color name="white">#ffffff</color>
+
+    <!-- Magic -->
+    <color name="colorPrimaryLibrary">#3727ab</color>
+
+</resources>

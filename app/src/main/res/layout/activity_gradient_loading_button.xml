@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.mobiversal.componentsdemo.GradientLoadingButtonActivity">
+
+    <com.mobiversal.gradientloadingbutton.GradientLoadingButton
+            android:id="@+id/glbtn_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:buttonGradientCenterColorGLB="@android:color/holo_blue_bright"
+            app:buttonGradientEndColorGLB="#003366"
+            app:buttonGradientStartColorGLB="@android:color/holo_blue_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textGLB="@string/action_settings"/>
+
+    <com.mobiversal.gradientloadingbutton.GradientLoadingButton
+            android:id="@+id/glbtn_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            app:buttonGradientCenterColorGLB="@android:color/holo_blue_dark"
+            app:buttonGradientEndColorGLB="@android:color/holo_red_light"
+            app:buttonGradientStartColorGLB="@android:color/holo_red_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/glbtn_one"
+            app:textGLB="@string/popup_action_cancel"
+            app:backgroundGLB="@drawable/shape_btn_bg_normal"/>
+
+    <com.mobiversal.gradientloadingbutton.GradientLoadingButton
+            android:id="@+id/glbtn_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:buttonGradientEndColorGLB="@android:color/holo_green_light"
+            app:buttonGradientStartColorGLB="@android:color/holo_green_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/glbtn_two"
+            app:textGLB="@string/popup_title_error"/>
+
+    <com.mobiversal.gradientloadingbutton.GradientLoadingButton
+            android:id="@+id/glbtn_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gradient example"
+            app:buttonGradientCenterColorGLB="@android:color/holo_blue_light"
+            app:buttonGradientEndColorGLB="@android:color/holo_orange_light"
+            app:buttonGradientStartColorGLB="@android:color/holo_green_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/glbtn_three"
+            app:textGLB="@string/button_loading_view"/>
+
+    <com.mobiversal.gradientloadingbutton.GradientLoadingButton
+            android:id="@+id/glbtn_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gradient example"
+            app:buttonGradientCenterColorGLB="@android:color/holo_blue_light"
+            app:buttonGradientEndColorGLB="@android:color/holo_green_dark"
+            app:buttonGradientStartColorGLB="@android:color/holo_purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/glbtn_four"
+            app:textGLB="@string/button_loading_view"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

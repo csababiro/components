@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SearchBar">
+        <attr name="textSB" format="reference" />
+        <attr name="textColorSB" format="reference" />
+        <attr name="textSizeSB" format="dimension" />
+        <attr name="fontFamilySB" format="reference" />
+        <attr name="hintSB" format="reference" />
+        <attr name="hintColorSB" format="reference" />
+        <attr name="searchDrawableSB" format="reference" />
+        <attr name="cancelSearchDrawableSB" format="reference" />
+        <attr name="inputTypeSB" format="enum">
+            <enum name="text" value="0"/>
+            <enum name="textCapWords" value="1"/>
+            <enum name="number" value="2"/>
+        </attr>
+        <attr name="editTextPaddingStartSB" format="dimension" />
+        <attr name="editTextPaddingEndSB" format="dimension" />
+        <attr name="editTextBackgroundSB" format="reference" />
+        <attr name="enableMinLengthToSearchSB"  format="boolean" />
+        <attr name="minLengthToSearchSB" format="reference" />
+        <attr name="typingDelayMillisSB" format="integer" />
+    </declare-styleable>
+
+</resources>

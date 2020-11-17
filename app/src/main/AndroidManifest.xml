@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.mobiversal.componentsdemo">
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity android:name=".GradientLoadingButtonActivity"></activity>
+        <activity
+                android:name=".MainActivity"
+                android:label="@string/title_activity_main"
+                android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".SpannableCheckboxActivity"
+                android:label="@string/title_activity_spannable_checkbox"
+                android:theme="@style/AppTheme"></activity>
+        <activity
+                android:name=".LoadingViewsActivity"
+                android:label="@string/title_activity_loading_views"
+                android:theme="@style/AppTheme"></activity>
+        <activity
+                android:name=".SearchBarActivity"
+                android:label="@string/title_activity_search_bar"
+                android:theme="@style/AppTheme"></activity>
+        <activity
+                android:name=".IntervalPickerActivity"
+                android:label="@string/title_activity_interval_picker"
+                android:theme="@style/AppTheme"></activity>
+        <activity
+                android:name=".GradientTextViewActivity"
+                android:label="@string/title_activity_gradient_text_view"
+                android:theme="@style/AppTheme"></activity>
+        <activity
+                android:name=".GradientButtonActivity"
+                android:label="@string/title_activity_gradient_button"
+                android:theme="@style/AppTheme"></activity>
+        <activity
+                android:name=".PopupWindowCustomActivity"
+                android:label="@string/title_activity_popup_window_custom"
+                android:theme="@style/AppTheme"></activity>
+        <activity
+                android:name=".KotlinExtensionsActivity"
+                android:label="@string/title_activity_kotlin_extensions"
+                android:theme="@style/AppTheme"></activity>
+    </application>
+
+</manifest>

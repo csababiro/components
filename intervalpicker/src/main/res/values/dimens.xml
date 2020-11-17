@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Number picker font size -->
+    <dimen name="number_picker_font_size">20sp</dimen>
+
+</resources>

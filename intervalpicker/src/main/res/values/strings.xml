@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">IntervalPicker</string>
+    <string name="popup_action_cancel">Cancel</string>
+    <string name="popup_action_save">Save</string>
+
+    <!-- Tabor app -->
+    <string name="h">h</string>
+    <string name="min">min</string>
+
+    <!-- Magic -->
+    <string name="h_superscript">h</string>
+
+</resources>

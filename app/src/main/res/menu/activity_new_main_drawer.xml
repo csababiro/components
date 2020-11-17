@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_spannable_checkbox"
+                android:title="@string/menu_spannable_checkbox"/>
+        <item
+                android:id="@+id/nav_loading_views"
+                android:title="@string/menu_loading_views"/>
+        <item
+                android:id="@+id/nav_search_bar"
+                android:title="@string/menu_search_bar"/>
+        <item
+                android:id="@+id/nav_interval_picker"
+                android:title="@string/menu_interval_picker"/>
+        <item
+                android:id="@+id/nav_gradient_text_view"
+                android:title="@string/menu_gradient_text_view"/>
+        <item
+                android:id="@+id/nav_gradient_button"
+                android:title="@string/menu_gradient_button"/>
+        <item
+                android:id="@+id/nav_popup_window_custom"
+                android:title="@string/menu_popup_window_custom"/>
+        <item
+                android:id="@+id/nav_kotlin_extensions"
+                android:title="@string/menu_kotlin_extensions"/>
+
+        <item
+                android:id="@+id/nav_gradient_loading_button"
+                android:title="@string/menu_gradient_loading_button"/>
+    </group>
+
+</menu>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llIMV"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgIMV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="10dp"
+        android:layout_marginTop="4dp"
+        tools:src="@tools:sample/avatars"
+        android:layout_centerInParent="true"/>
+
+    <ImageView
+        android:id="@+id/imgLoadingBakgroundIMV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/shape_circle_image_default_blue"
+        android:alpha="0.5"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_margin="2dp"/>
+
+    <ImageView
+        android:id="@+id/imgLoadingIMV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/loading_circle_image_default_white"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

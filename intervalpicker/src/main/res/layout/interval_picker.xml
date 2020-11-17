@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layoutDirection="ltr"
+              android:gravity="center_vertical">
+
+    <!-- hour -->
+    <com.mobiversal.intervalpicker.CustomNumberPicker
+            android:id="@+id/hour"
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+    />
+
+    <TextView
+            android:id="@+id/hour_separator"
+            style="@style/SpinnerSeparator"/>
+
+    <!-- minute -->
+    <com.mobiversal.intervalpicker.CustomNumberPicker
+            android:id="@+id/minute"
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+    />
+
+    <TextView
+            android:id="@+id/minute_separator"
+            style="@style/SpinnerSeparator"/>
+
+    <!-- seconds -->
+    <com.mobiversal.intervalpicker.CustomNumberPicker
+            android:id="@+id/seconds"
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
+
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ScreenLoadingView">
+        <attr name="textSLV" format="reference" />
+        <attr name="textSizeSLV" format="reference" />
+        <attr name="textColorSLV" format="reference" />
+        <attr name="fontFamilySLV" format="reference" />
+        <attr name="textGravitySLV" format="reference" />
+        <attr name="loadingDrawableSLV" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ButtonLoadingView">
+        <attr name="textBLV" format="reference" />
+        <attr name="textSizeBLV" format="reference" />
+        <attr name="textColorBLV" format="reference" />
+        <attr name="fontFamilyBLV" format="reference" />
+        <attr name="textGravityBLV" format="reference" />
+        <attr name="loadingDrawableBLV" format="reference" />
+        <attr name="enabledBLV" format="boolean" />
+        <attr name="drawableStartBLV" format="reference" />
+        <attr name="disabledTextColorBLV" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ImageLoadingView">
+        <attr name="srcILV" format="reference" />
+        <attr name="srcLoadingILV" format="reference" />
+        <attr name="srcLoadingBackgroundILV" format="reference" />
+    </declare-styleable>
+
+</resources>
