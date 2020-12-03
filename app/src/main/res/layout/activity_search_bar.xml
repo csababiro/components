@@ -22,5 +22,39 @@
             app:editTextBackgroundSB="@android:color/transparent"
             android:background="@drawable/shape_rounded_20p_black"/>
 
+    <com.mobiversal.searchbar.SearchBar
+        android:id="@+id/searchBarCities"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchBar"
+        app:searchDrawableSB="@drawable/ic_search"
+        app:cancelSearchDrawableSB="@drawable/selector_btn_cancel_search"
+        app:editTextBackgroundSB="@drawable/selector_bg_search"
+        app:textColorSB="@android:color/black"
+        app:hintColorSB="@android:color/black"
+        app:hintSB="@string/search_city"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"/>
+
+
+    <com.mobiversal.searchbar.AutocompleteSearchBar
+        android:id="@+id/autocompleteSearchBarCities"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchBarCities"
+        app:searchDrawableSB="@drawable/ic_search"
+        app:cancelSearchDrawableSB="@drawable/selector_btn_cancel_search"
+        app:editTextBackgroundSB="@drawable/selector_bg_search"
+        app:textColorSB="@android:color/black"
+        app:hintColorSB="@android:color/black"
+        app:hintSB="@string/search_city"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

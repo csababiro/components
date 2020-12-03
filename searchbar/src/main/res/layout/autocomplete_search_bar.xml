@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:layout_height="match_parent"
+    tools:layout_width="match_parent"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <EditText
+        android:id="@+id/search_et_search"
+        style="@style/SearchEditTextStyle"
+        android:imeOptions="actionDone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="Hint"
+        tools:ignore="Autofill,LabelFor"/>
+
+    <ImageView
+        android:id="@+id/search_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6.5dp"
+        android:layout_marginStart="14dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/ic_cancel_search"/>
+
+    <ImageView
+        android:id="@+id/search_iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6.5dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:focusable="true"
+        android:src="@drawable/selector_button_cancel_search"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/search_et_search"
+        app:layout_constraintEnd_toEndOf="@+id/search_et_search"
+        app:layout_constraintTop_toTopOf="@+id/search_et_search"/>
+
+</merge>

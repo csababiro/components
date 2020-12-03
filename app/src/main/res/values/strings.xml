@@ -32,4 +32,6 @@
     <!-- Loading screen -->
     <string name="button_loading_view">ButtonLoadingView</string>
 
+    <string name="search_city">Search city&#8230;</string>
+
 </resources>
