@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.text.Spannable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -140,7 +141,11 @@ class GradientLoadingButton @JvmOverloads constructor(context: Context, val attr
         btnGradient.setCompoundDrawablesWithIntrinsicBounds(resourceId, null, null, null)
     }
 
-    fun textBLV(text: String) {
+    fun setTextBLV(text: String) {
+        btnGradient.text = text
+    }
+
+    fun setSpannableTextBLV(text: Spannable) {
         btnGradient.text = text
     }
 
