@@ -54,17 +54,10 @@ public class GradientTextView extends AppCompatTextView {
 
     private void extractViewAttributes(@NonNull Context context, @NonNull AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.GradientTextView);
-        int defaultColor = getTextColors().getDefaultColor();
-        if (typedArray != null) {
-            gradientStartColor = typedArray.getColor(R.styleable.GradientTextView_textGradientStartColor, defaultColor);
-            gradientCenterColor = typedArray.getColor(R.styleable.GradientTextView_textGradientCenterColor, defaultColor);
-            gradientEndColor = typedArray.getColor(R.styleable.GradientTextView_textGradientEndColor, defaultColor);
+            gradientStartColor = typedArray.getColor(R.styleable.GradientTextView_textGradientStartColor, 0);
+            gradientCenterColor = typedArray.getColor(R.styleable.GradientTextView_textGradientCenterColor, 0);
+            gradientEndColor = typedArray.getColor(R.styleable.GradientTextView_textGradientEndColor, 0);
             typedArray.recycle();
-        } else {
-            gradientStartColor = defaultColor;
-            gradientCenterColor = defaultColor;
-            gradientEndColor = defaultColor;
-        }
     }
 
     @Override
@@ -80,7 +73,10 @@ public class GradientTextView extends AppCompatTextView {
         final float paddingStart = getPaddingStart();
         final float startX = paddingStart;
         final float endX = textWidth + paddingStart;
-        final Shader shader = new LinearGradient(startX, 0f, endX, lineHeight, new int[] { gradientStartColor, gradientCenterColor, gradientEndColor }, null, Shader.TileMode.CLAMP);
+        int[] gradients = new int[]{gradientStartColor, gradientCenterColor, gradientEndColor};
+        if (gradientCenterColor == 0)
+            gradients = new int[]{gradientStartColor, gradientEndColor};
+        final Shader shader = new LinearGradient(startX, 0f, endX, lineHeight, gradients, null, Shader.TileMode.CLAMP);
         getPaint().setShader(shader);
         invalidate();
     }
