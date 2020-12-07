@@ -37,16 +37,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.ImageButton
-import androidx.camera.core.AspectRatio
-import androidx.camera.core.Camera
-import androidx.camera.core.CameraInfoUnavailableException
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageCapture
+import androidx.camera.core.*
 import androidx.camera.core.ImageCapture.Metadata
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -93,6 +85,8 @@ val EXTENSION_WHITELIST = arrayOf("JPG")
 
 class CameraFragment : Fragment() {
 
+    private var recording = false
+
     private lateinit var container: ConstraintLayout
     private lateinit var viewFinder: PreviewView
     private lateinit var outputDirectory: File
@@ -101,7 +95,7 @@ class CameraFragment : Fragment() {
     private var displayId: Int = -1
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
     private var preview: Preview? = null
-    private var imageCapture: ImageCapture? = null
+    private var videoCapture: VideoCapture? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
@@ -138,7 +132,6 @@ class CameraFragment : Fragment() {
         override fun onDisplayChanged(displayId: Int) = view?.let { view ->
             if (displayId == this@CameraFragment.displayId) {
                 Log.d(TAG, "Rotation changed: ${view.display.rotation}")
-                imageCapture?.targetRotation = view.display.rotation
                 imageAnalyzer?.targetRotation = view.display.rotation
             }
         } ?: Unit
@@ -269,6 +262,7 @@ class CameraFragment : Fragment() {
     }
 
     /** Declare and bind preview, capture and analysis use cases */
+    @SuppressLint("RestrictedApi")
     private fun bindCameraUseCases() {
 
         // Get screen metrics used to setup camera for full screen resolution
@@ -296,8 +290,8 @@ class CameraFragment : Fragment() {
                 .build()
 
         // ImageCapture
-        imageCapture = ImageCapture.Builder()
-                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+        videoCapture = VideoCapture.Builder()
+                //.setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 // We request aspect ratio but no resolution to match preview config, but letting
                 // CameraX optimize for whatever specific resolution best fits our use cases
                 .setTargetAspectRatio(screenAspectRatio)
@@ -331,7 +325,7 @@ class CameraFragment : Fragment() {
             // A variable number of use-cases can be passed here -
             // camera provides access to CameraControl & CameraInfo
             camera = cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture, imageAnalyzer)
+                    this, cameraSelector, preview, videoCapture)//, imageAnalyzer)
 
             // Attach the viewfinder's surface provider to preview use case
             preview?.setSurfaceProvider(viewFinder.surfaceProvider)
@@ -360,6 +354,7 @@ class CameraFragment : Fragment() {
     }
 
     /** Method used to re-draw the camera UI controls, called every time configuration changes. */
+    @SuppressLint("RestrictedApi")
     private fun updateCameraUi() {
 
         // Remove previous UI if any
@@ -383,73 +378,102 @@ class CameraFragment : Fragment() {
         controls.findViewById<ImageButton>(R.id.camera_capture_button).setOnClickListener {
 
             // Get a stable reference of the modifiable image capture use case
-            imageCapture?.let { imageCapture ->
+            videoCapture?.let { videoCapture ->
 
-                // Create output file to hold the image
-                val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
+                if (recording) {
+                    recording = false
+                    videoCapture.stopRecording()
+                } else {
+                    recording = true
 
-                // Setup image capture metadata
-                val metadata = Metadata().apply {
+                    // Create output file to hold the image
+                    val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
 
-                    // Mirror image when using the front camera
-                    isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
-                }
+                    // Setup image capture metadata
+                    val metadata = Metadata().apply {
 
-                // Create output options object which contains file + metadata
-                val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile)
-                        .setMetadata(metadata)
+                        // Mirror image when using the front camera
+                        isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
+                    }
+
+                    // Create output options object which contains file + metadata
+                    val outputOptions = VideoCapture.OutputFileOptions.Builder(photoFile)
+                        //.setMetadata(metadata) TODO
                         .build()
+//                    ImageCapture.OutputFileOptions.Builder(photoFile)
+//                        .setMetadata(metadata)
+//                        .build() TODO remove
 
-                // Setup image capture listener which is triggered after photo has been taken
-                imageCapture.takePicture(
-                        outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
-                    override fun onError(exc: ImageCaptureException) {
-                        Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
-                    }
+                    videoCapture.startRecording(
+                        outputOptions,
+                        cameraExecutor,
+                        object : VideoCapture.OnVideoSavedCallback {
 
-                    override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                        val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
-                        Log.d(TAG, "Photo capture succeeded: $savedUri")
+                            override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
+                                Log.d("TEST", "Result video path: " + outputFileResults.savedUri)
+                            }
 
-                        // We can only change the foreground Drawable using API level 23+ API
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            // Update the gallery thumbnail with latest picture taken
-                            setGalleryThumbnail(savedUri)
-                        }
+                            override fun onError(
+                                videoCaptureError: Int,
+                                message: String,
+                                cause: Throwable?
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+                        })
 
-                        // Implicit broadcasts will be ignored for devices running API level >= 24
-                        // so if you only target API level 24+ you can remove this statement
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                            requireActivity().sendBroadcast(
-                                    Intent(android.hardware.Camera.ACTION_NEW_PICTURE, savedUri)
-                            )
-                        }
+                    // TODO remove
+                    // Setup image capture listener which is triggered after photo has been taken
+//                videoCapture.takePicture(
+//                        outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
+//                    override fun onError(exc: ImageCaptureException) {
+//                        Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+//                    }
+//
+//                    override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+//                        val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
+//                        Log.d(TAG, "Photo capture succeeded: $savedUri")
+//
+//                        // We can only change the foreground Drawable using API level 23+ API
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                            // Update the gallery thumbnail with latest picture taken
+//                            setGalleryThumbnail(savedUri)
+//                        }
+//
+//                        // Implicit broadcasts will be ignored for devices running API level >= 24
+//                        // so if you only target API level 24+ you can remove this statement
+//                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+//                            requireActivity().sendBroadcast(
+//                                    Intent(android.hardware.Camera.ACTION_NEW_PICTURE, savedUri)
+//                            )
+//                        }
+//
+//                        // If the folder selected is an external media directory, this is
+//                        // unnecessary but otherwise other apps will not be able to access our
+//                        // images unless we scan them using [MediaScannerConnection]
+//                        val mimeType = MimeTypeMap.getSingleton()
+//                                .getMimeTypeFromExtension(savedUri.toFile().extension)
+//                        MediaScannerConnection.scanFile(
+//                                context,
+//                                arrayOf(savedUri.toFile().absolutePath),
+//                                arrayOf(mimeType)
+//                        ) { _, uri ->
+//                            Log.d(TAG, "Image capture scanned into media store: $uri")
+//                        }
+//                    }
+//                })
 
-                        // If the folder selected is an external media directory, this is
-                        // unnecessary but otherwise other apps will not be able to access our
-                        // images unless we scan them using [MediaScannerConnection]
-                        val mimeType = MimeTypeMap.getSingleton()
-                                .getMimeTypeFromExtension(savedUri.toFile().extension)
-                        MediaScannerConnection.scanFile(
-                                context,
-                                arrayOf(savedUri.toFile().absolutePath),
-                                arrayOf(mimeType)
-                        ) { _, uri ->
-                            Log.d(TAG, "Image capture scanned into media store: $uri")
-                        }
-                    }
-                })
+                    // We can only change the foreground Drawable using API level 23+ API
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                // We can only change the foreground Drawable using API level 23+ API
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                    // Display flash animation to indicate that photo was captured
-                    container.postDelayed({
-                        container.foreground = ColorDrawable(Color.WHITE)
-                        container.postDelayed(
+                        // Display flash animation to indicate that photo was captured
+                        container.postDelayed({
+                            container.foreground = ColorDrawable(Color.WHITE)
+                            container.postDelayed(
                                 { container.foreground = null }, ANIMATION_FAST_MILLIS
-                        )
-                    }, ANIMATION_SLOW_MILLIS)
+                            )
+                        }, ANIMATION_SLOW_MILLIS)
+                    }
                 }
             }
         }
