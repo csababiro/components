@@ -32,6 +32,10 @@
         <item
                 android:id="@+id/nav_gradient_loading_button"
                 android:title="@string/menu_gradient_loading_button"/>
+
+        <item
+            android:id="@+id/nav_video_capture"
+            android:title="@string/menu_video_capture"/>
     </group>
 
 </menu>

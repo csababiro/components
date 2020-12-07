@@ -83,6 +83,8 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
                 launchActivity<KotlinExtensionsActivity>()
             R.id.nav_gradient_loading_button ->
                 launchActivity<GradientLoadingButtonActivity>()
+            R.id.nav_video_capture ->
+                launchActivity<VideoCaptureDemoActivity>()
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
