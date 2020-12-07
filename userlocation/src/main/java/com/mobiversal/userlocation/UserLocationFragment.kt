@@ -64,7 +64,7 @@ abstract class UserLocationFragment : Fragment() {
     private fun getLocation(activity: Activity) {
         if (mFusedLocationClient == null)
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
-        getLastKnownLocation(mFusedLocationClient!!)
+        //getLastKnownLocation(mFusedLocationClient!!) not needed now
         initLocationUpdateListener(mFusedLocationClient)
     }
 
@@ -143,11 +143,10 @@ abstract class UserLocationFragment : Fragment() {
 
     protected open fun locationPermissionResult() {
         activity?.let { activity ->
-            if (hasLocationPermission(activity))
-                getLocation(activity)
-            else
-                if (shouldShowRationale(activity))
-                    requestLocationPermission(activity)
+            when {
+                hasLocationPermission(activity) -> getLocation(activity)
+                shouldShowRationale(activity) -> showRationaleDialog(activity)
+            }
         }
     }
 }
