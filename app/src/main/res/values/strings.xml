@@ -18,6 +18,8 @@
     <string name="menu_kotlin_extensions">Kotlin extensions</string>
     <string name="menu_gradient_loading_button">Gradient loading button</string>
     <string name="menu_video_capture">Video Capture</string>
+    <string name="menu_spannable_text_view">Spannable textView</string>
+    <string name="menu_see_more">See more</string>
 
     <!-- Screen titles -->
     <string name="title_activity_main">Components Demo</string>

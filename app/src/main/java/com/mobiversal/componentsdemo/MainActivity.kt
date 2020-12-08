@@ -85,6 +85,10 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
                 launchActivity<GradientLoadingButtonActivity>()
             R.id.nav_video_capture ->
                 launchActivity<VideoCaptureDemoActivity>()
+            R.id.nav_spannable_text_view ->
+                launchActivity<SpannableTextViewActivity>()
+            R.id.nav_see_more ->
+                launchActivity<SeeMoreActivity>()
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)

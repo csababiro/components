@@ -46,4 +46,6 @@ dependencies {
     implementation project(path: ':spannabletextview')
     implementation project(path: ':smsretrieve')
     implementation project(path: ':spannablecheckbox')
+    implementation project(path: ':spannabletextview')
+    implementation project(path: ':seemoretextview')
 }

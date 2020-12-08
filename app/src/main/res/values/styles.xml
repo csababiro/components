@@ -26,4 +26,12 @@
         <item name="enableCheckBoxRippleSCB">false</item>
     </style>
 
+    <style name="TermsStyleTxt" parent="AppTheme">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/font_size_14</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
+        <item name="spannableColorTCB">@color/colorPrimary</item>
+        <item name="enableSpannableUnderlineTCB">false</item>
+    </style>
+
 </resources>

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VideoCaptureDemoActivity"></activity>
+        <activity android:name=".SeeMoreActivity"></activity>
+        <activity android:name=".SpannableTextViewActivity" />
+        <activity android:name=".VideoCaptureDemoActivity" />
         <activity android:name=".GradientLoadingButtonActivity" />
         <activity
             android:name=".MainActivity"
