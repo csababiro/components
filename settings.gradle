@@ -1,3 +1,4 @@
+include ':spannablecheckbox'
 include ':smsretrieve'
 include ':userlocation'
 include ':videocapture'
