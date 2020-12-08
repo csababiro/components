@@ -14,4 +14,16 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="TermsStyle" parent="AppTheme">
+        <item name="textColorSCB">@android:color/black</item>
+        <item name="textSizeSCB">@dimen/font_size_14</item>
+        <item name="textFontFamilySCB">@font/open_sans_bold</item>
+        <item name="checkBoxPaddingSCB">@dimen/margin_8dp</item>
+        <item name="buttonDrawableSCB">@drawable/selector_check_box</item>
+        <item name="spannableColorSCB">@color/colorPrimary</item>
+        <item name="enableSpannableUnderlineSCB">false</item>
+        <item name="alignCheckBoxToRightSCB">true</item>
+        <item name="enableCheckBoxRippleSCB">false</item>
+    </style>
+
 </resources>
