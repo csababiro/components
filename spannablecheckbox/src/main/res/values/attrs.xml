@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SpannableCheckBox">
+        <attr name="textColorSCB" format="reference" />
+        <attr name="textSizeSCB" format="reference" />
+        <attr name="textFontFamilySCB" format="reference" />
+        <attr name="checkBoxPaddingSCB" format="reference" />
+        <attr name="buttonDrawableSCB" format="reference" />
+        <attr name="spannableColorSCB" format="reference" />
+        <attr name="enableSpannableUnderlineSCB" format="boolean" />
+        <attr name="alignCheckBoxToRightSCB" format="boolean" />
+        <attr name="enableCheckBoxRippleSCB" format="boolean" />
+        <attr name="textLetterSpacingSCB" format="float" />
+        <attr name="textLineSpacingExtraSCB" format="reference" />
+    </declare-styleable>
+</resources>
