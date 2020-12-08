@@ -1,3 +1,4 @@
+include ':seemoretextview'
 include ':spannabletextview'
 include ':spannablecheckbox'
 include ':smsretrieve'
