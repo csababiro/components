@@ -3,5 +3,6 @@
     <declare-styleable name="SpannableTextView">
         <attr name="spannableColorTCB" format="reference" />
         <attr name="enableSpannableUnderlineTCB" format="boolean" />
+        <attr name="textFontFamilyTCB" format="reference" />
     </declare-styleable>
 </resources>

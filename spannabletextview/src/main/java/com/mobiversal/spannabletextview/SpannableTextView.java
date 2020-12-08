@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -16,6 +18,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,7 @@ public class SpannableTextView extends AppCompatTextView {
 
     private int spannableColor = Color.BLACK;
     private boolean showSpannableUnderline;
+    private Typeface spannableTypeFace;
 
     private SpannableCheckBoxInterface spannableClickListener;
 
@@ -60,6 +64,8 @@ public class SpannableTextView extends AppCompatTextView {
                 spannableColor = color;
 
             showSpannableUnderline = typedArray.getBoolean(R.styleable.SpannableTextView_enableSpannableUnderlineTCB, false);
+
+            spannableTypeFace = getTypeFace(typedArray);
 
             typedArray.recycle();
         }
@@ -113,6 +119,7 @@ public class SpannableTextView extends AppCompatTextView {
 
         spannable = addClickableSpan(spannable, start, end - 1, index);
         spannable = addColorSpan(spannable, start, end);
+        spannable = addTypefaceSpan(spannable, start, end);
         if (showSpannableUnderline)
             spannable = addUnderlineSpan(spannable, start, end);
 
@@ -121,6 +128,12 @@ public class SpannableTextView extends AppCompatTextView {
 
     private Spannable addColorSpan(Spannable spannable, int start, int end) {
         spannable.setSpan(new ForegroundColorSpan(spannableColor), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
+    }
+
+    private Spannable addTypefaceSpan(Spannable spannable, int start, int end) {
+        if(spannableTypeFace != null)
+            spannable.setSpan(new CustomTypefaceSpan(spannableTypeFace, spannableColor), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannable;
     }
 
@@ -163,5 +176,24 @@ public class SpannableTextView extends AppCompatTextView {
 
     public void setSpannableClickListener(SpannableCheckBoxInterface spannableClickListener) {
         this.spannableClickListener = spannableClickListener;
+    }
+
+    private Typeface getTypeFace(TypedArray typedArray) {
+        Typeface fontTypeFace = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Typeface typeface = typedArray.getFont(R.styleable.SpannableTextView_textFontFamilyTCB);
+            if (typeface != null)
+                fontTypeFace = typeface;
+        } else {
+            if (typedArray.hasValue(R.styleable.SpannableTextView_textFontFamilyTCB)) {
+                int fontId = typedArray.getResourceId(R.styleable.SpannableTextView_textFontFamilyTCB, -1);
+                if (fontId != -1) {
+                    Typeface typeface = ResourcesCompat.getFont(this.getContext(), fontId);
+                    if (typeface != null)
+                        fontTypeFace = typeface;
+                }
+            }
+        }
+        return fontTypeFace;
     }
 }

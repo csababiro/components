@@ -32,6 +32,7 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
         <item name="spannableColorTCB">@color/colorPrimary</item>
         <item name="enableSpannableUnderlineTCB">false</item>
+        <item name="textFontFamilyTCB">@font/avenir_next_ltpro_boldcn</item>
     </style>
 
 </resources>
