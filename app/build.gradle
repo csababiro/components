@@ -42,4 +42,8 @@ dependencies {
     implementation project(path: ':loadingviews')
     implementation project(path: ':gradientloadingbutton')
     implementation project(path: ':videocapture')
+    implementation project(path: ':userlocation')
+    implementation project(path: ':spannabletextview')
+    implementation project(path: ':smsretrieve')
+    implementation project(path: ':spannablecheckbox')
 }
