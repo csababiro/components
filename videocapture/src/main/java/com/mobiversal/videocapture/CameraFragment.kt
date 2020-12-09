@@ -487,14 +487,12 @@ class CameraFragment : Fragment() {
         // Listener for button used to view the most recent photo
         controls.findViewById<ImageButton>(R.id.photo_view_button).setOnClickListener {
             // Only navigate when the gallery has photos
-//            if (true == outputDirectory.listFiles()?.isNotEmpty()) {
-//                Navigation.findNavController(
-//                        requireActivity(), R.id.fragment_container
-//                ).navigate(CameraFragmentDirections
-//                        .actionCameraToGallery(outputDirectory.absolutePath))
-//            }
-
-            // TODO
+            if (true == outputDirectory.listFiles()?.isNotEmpty()) {
+                Navigation.findNavController(
+                        requireActivity(), R.id.fragment_container
+                ).navigate(CameraFragmentDirections
+                        .actionCameraToGallery(outputDirectory.absolutePath))
+            }
         }
     }
 

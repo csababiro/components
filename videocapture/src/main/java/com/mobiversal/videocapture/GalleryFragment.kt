@@ -39,7 +39,7 @@ import com.android.example.cameraxbasic.utils.padWithDisplayCutout
 import com.android.example.cameraxbasic.utils.showImmersive
 import java.util.Locale
 
-val EXTENSION_WHITELIST = arrayOf("JPG")
+val EXTENSION_WHITELIST = arrayOf("mp4")
 
 /** Fragment used to present the user with a gallery of photos taken */
 class GalleryFragment internal constructor() : Fragment() {
