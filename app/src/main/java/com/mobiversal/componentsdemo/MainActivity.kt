@@ -11,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.mobiversal.kotlinextensions.activity.launchActivity
+import com.mobiversal.videocapture.VideoCaptureActivity
 
 class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -84,7 +85,7 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
             R.id.nav_gradient_loading_button ->
                 launchActivity<GradientLoadingButtonActivity>()
             R.id.nav_video_capture ->
-                launchActivity<VideoCaptureDemoActivity>()
+                launchActivity<VideoCaptureActivity>()
             R.id.nav_spannable_text_view ->
                 launchActivity<SpannableTextViewActivity>()
             R.id.nav_see_more ->
