@@ -9,6 +9,7 @@
     <application>
         <activity
             android:name=".VideoCaptureActivity"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"/>
     </application>
 
