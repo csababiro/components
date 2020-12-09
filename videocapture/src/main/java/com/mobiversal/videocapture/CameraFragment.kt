@@ -30,6 +30,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.util.Size
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -258,6 +259,7 @@ class CameraFragment : Fragment() {
         Log.d(TAG, "Screen metrics: ${metrics.widthPixels} x ${metrics.heightPixels}")
 
         val screenAspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
+        val screenSize = getVideoSize()
         Log.d(TAG, "Preview aspect ratio: $screenAspectRatio")
 
         val rotation = viewFinder.display.rotation
@@ -272,7 +274,8 @@ class CameraFragment : Fragment() {
         // Preview
         preview = Preview.Builder()
                 // We request aspect ratio but no resolution
-                .setTargetAspectRatio(screenAspectRatio)
+                //.setTargetAspectRatio(screenAspectRatio)
+                .setTargetResolution(screenSize)
                 // Set initial target rotation
                 .setTargetRotation(rotation)
                 .build()
@@ -282,7 +285,8 @@ class CameraFragment : Fragment() {
                 //.setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 // We request aspect ratio but no resolution to match preview config, but letting
                 // CameraX optimize for whatever specific resolution best fits our use cases
-                .setTargetAspectRatio(screenAspectRatio)
+                //.setTargetAspectRatio(screenAspectRatio)
+                .setTargetResolution(screenSize)
                 // Set initial target rotation, we will have to call this again if rotation changes
                 // during the lifecycle of this use case
                 .setTargetRotation(rotation)
@@ -291,7 +295,8 @@ class CameraFragment : Fragment() {
         // ImageAnalysis
         imageAnalyzer = ImageAnalysis.Builder()
                 // We request aspect ratio but no resolution
-                .setTargetAspectRatio(screenAspectRatio)
+                //.setTargetAspectRatio(screenAspectRatio)
+                .setTargetResolution(screenSize)
                 // Set initial target rotation, we will have to call this again if rotation changes
                 // during the lifecycle of this use case
                 .setTargetRotation(rotation)
@@ -615,5 +620,9 @@ class CameraFragment : Fragment() {
         private fun createFile(baseFolder: File, format: String, extension: String) =
                 File(baseFolder, SimpleDateFormat(format, Locale.US)
                         .format(System.currentTimeMillis()) + extension)
+    }
+
+    private fun getVideoSize() : Size {
+        return Size(1280, 720)
     }
 }
