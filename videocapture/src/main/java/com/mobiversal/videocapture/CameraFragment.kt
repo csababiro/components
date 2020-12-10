@@ -52,7 +52,7 @@ import com.android.example.cameraxbasic.utils.ANIMATION_SLOW_MILLIS
 import com.android.example.cameraxbasic.utils.simulateClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.camera_ui_container.*
+import kotlinx.android.synthetic.main.fragmen_record_video_ui.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -357,7 +357,7 @@ class CameraFragment : Fragment() {
         }
 
         // Inflate a new view containing all UI for controlling the camera
-        val controls = View.inflate(requireContext(), R.layout.camera_ui_container, container)
+        val controls = View.inflate(requireContext(), R.layout.fragmen_record_video_ui, container)
 
         // In the background, load latest photo taken (if any) for gallery thumbnail
         lifecycleScope.launch(Dispatchers.IO) {
