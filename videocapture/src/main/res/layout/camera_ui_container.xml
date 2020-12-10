@@ -24,7 +24,7 @@
 
     <!-- Camera control and gallery buttons -->
     <ImageButton
-        android:id="@+id/camera_switch_button"
+        android:id="@+id/btnCameraSwitch"
         android:layout_width="@dimen/round_button_medium"
         android:layout_height="@dimen/round_button_medium"
         android:layout_marginBottom="@dimen/margin_xlarge"
@@ -38,12 +38,12 @@
         android:contentDescription="@string/switch_camera_button_alt" />
 
     <ImageButton
-        android:id="@+id/camera_capture_button"
+        android:id="@+id/btnRecord"
         android:layout_width="@dimen/round_button_large"
         android:layout_height="@dimen/round_button_large"
         android:layout_marginBottom="@dimen/shutter_button_margin"
         android:scaleType="fitCenter"
-        android:background="@drawable/ic_shutter"
+        android:background="@drawable/selector_btn_record"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -52,6 +52,7 @@ import com.android.example.cameraxbasic.utils.ANIMATION_SLOW_MILLIS
 import com.android.example.cameraxbasic.utils.simulateClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import kotlinx.android.synthetic.main.camera_ui_container.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -105,7 +106,7 @@ class CameraFragment : Fragment() {
                 // When the volume down button is pressed, simulate a shutter button click
                 KeyEvent.KEYCODE_VOLUME_DOWN -> {
                     val shutter = container
-                            .findViewById<ImageButton>(R.id.camera_capture_button)
+                            .findViewById<ImageButton>(R.id.btnRecord)
                     shutter.simulateClick()
                 }
             }
@@ -368,7 +369,7 @@ class CameraFragment : Fragment() {
         }
 
         // Listener for button used to capture photo
-        controls.findViewById<ImageButton>(R.id.camera_capture_button).setOnClickListener {
+        controls.findViewById<ImageButton>(R.id.btnRecord).setOnClickListener {
 
             // Get a stable reference of the modifiable image capture use case
             videoCapture?.let { videoCapture ->
@@ -469,10 +470,12 @@ class CameraFragment : Fragment() {
                     }
                 }
             }
+
+            btnRecord.isSelected = recording
         }
 
         // Setup for button used to switch cameras
-        controls.findViewById<ImageButton>(R.id.camera_switch_button).let {
+        controls.findViewById<ImageButton>(R.id.btnCameraSwitch).let {
 
             // Disable the button until the camera is set up
             it.isEnabled = false
@@ -503,7 +506,7 @@ class CameraFragment : Fragment() {
 
     /** Enabled or disabled a button to switch cameras depending on the available cameras */
     private fun updateCameraSwitchButton() {
-        val switchCamerasButton = container.findViewById<ImageButton>(R.id.camera_switch_button)
+        val switchCamerasButton = container.findViewById<ImageButton>(R.id.btnCameraSwitch)
         try {
             switchCamerasButton.isEnabled = hasBackCamera() && hasFrontCamera()
         } catch (exception: CameraInfoUnavailableException) {
