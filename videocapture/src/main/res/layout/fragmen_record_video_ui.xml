@@ -22,6 +22,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/btnBackRecordVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="28dp"
+        android:scaleType="fitCenter"
+        android:background="?selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/ic_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <!-- Camera control and gallery buttons -->
     <ImageButton
         android:id="@+id/btnCameraSwitch"
@@ -50,7 +62,7 @@
         android:contentDescription="@string/capture_button_alt" />
 
     <ImageButton
-        android:id="@+id/photo_view_button"
+        android:id="@+id/btnPhotoView"
         android:layout_width="@dimen/round_button_medium"
         android:layout_height="@dimen/round_button_medium"
         android:layout_marginBottom="@dimen/margin_xlarge"

@@ -1,6 +1,9 @@
 package com.mobiversal.componentsdemo
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -11,7 +14,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.mobiversal.kotlinextensions.activity.launchActivity
-import com.mobiversal.videocapture.VideoCaptureActivity
+import com.mobiversal.videocapture.KEY_VIDEO_URI
+import com.mobiversal.videocapture.RecordVideoActivity
+
+const val REQUEST_CODE_RECORD_VIDEO = 1311
 
 class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -85,7 +91,7 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
             R.id.nav_gradient_loading_button ->
                 launchActivity<GradientLoadingButtonActivity>()
             R.id.nav_video_capture ->
-                launchActivity<VideoCaptureActivity>()
+                RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO)
             R.id.nav_spannable_text_view ->
                 launchActivity<SpannableTextViewActivity>()
             R.id.nav_see_more ->
@@ -94,5 +100,12 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_CODE_RECORD_VIDEO &&
+                resultCode == Activity.RESULT_OK)
+        Log.d("TEST", "Video recording uri returned: " + data?.getParcelableExtra(KEY_VIDEO_URI))
     }
 }
