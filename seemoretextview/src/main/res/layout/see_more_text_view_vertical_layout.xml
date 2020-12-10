@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <com.mobiversal.seemoretextview.NoScrollTextView
         android:id="@+id/txtSeeMoreContentSMTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,10 @@
         android:layout_marginBottom="20dp"
         android:textColor="@android:color/black"
         android:textIsSelectable="true"
-        tools:text="Cleaning house, dusting, wash dishes" />
+        tools:text="1Cleaning house, dusting, wash dishes 2Cleaning house, dusting, wash dishes 3Cleaning house, dusting, wash dishes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/btnSeeMoreSMTV"
@@ -27,6 +30,9 @@
         android:textAllCaps="true"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtSeeMoreContentSMTV"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
