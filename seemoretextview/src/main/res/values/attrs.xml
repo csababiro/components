@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SeeMoreTextViewVertical">
+        <attr name="textSMTW" format="reference" />
+        <attr name="textSizeSMTW" format="reference" />
+        <attr name="textColorSMTW" format="reference" />
+        <attr name="fontFamilySMTW" format="reference" />
+
+        <attr name="buttonTextSMTW" format="reference" />
+        <attr name="buttonTextSizeSMTW" format="reference" />
+        <attr name="buttonTextColorSMTW" format="reference" />
+        <attr name="buttonFontFamilySMTW" format="reference" />
+    </declare-styleable>
+
+</resources>
