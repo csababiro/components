@@ -1,20 +1,24 @@
 package com.mobiversal.videocapture
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.android.example.cameraxbasic.utils.FLAGS_FULLSCREEN
 import java.io.File
 
+const val REQUEST_CODE_RECORD_VIDEO = 1311
 const val KEY_EVENT_ACTION = "key_event_action"
 const val KEY_EVENT_EXTRA = "key_event_extra"
 private const val IMMERSIVE_FLAG_TIMEOUT = 500L
 
 class VideoCaptureActivity : AppCompatActivity() {
+
     private lateinit var container: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +50,11 @@ class VideoCaptureActivity : AppCompatActivity() {
 
     companion object {
 
+        fun openForResult(fragment: Fragment) {
+            val intent = Intent(fragment.context, VideoCaptureActivity::class.java)
+            fragment.startActivityForResult(intent, REQUEST_CODE_RECORD_VIDEO)
+        }
+
         /** Use external media if it is available, our app's file directory otherwise */
         fun getOutputDirectory(context: Context): File {
             val appContext = context.applicationContext
@@ -54,5 +63,15 @@ class VideoCaptureActivity : AppCompatActivity() {
             return if (mediaDir != null && mediaDir.exists())
                 mediaDir else appContext.filesDir
         }
+    }
+
+    override fun onBackPressed() {
+        sendResultBack()
+        super.onBackPressed()
+    }
+
+    private fun sendResultBack() {
+        val resultIntent = Intent()
+        setResult(Activity.RESULT_OK, resultIntent)
     }
 }
