@@ -48,7 +48,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.android.example.cameraxbasic.utils.ANIMATION_FAST_MILLIS
 import com.android.example.cameraxbasic.utils.ANIMATION_SLOW_MILLIS
-import kotlinx.android.synthetic.main.fragmen_record_video_ui.*
+import com.mobiversal.circularcountdown.CircularCountDownView
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -85,6 +85,7 @@ class CameraFragment : Fragment() {
     var savedUri: Uri? = null
 
     private var btnRecord: ImageButton? = null
+    private var circularCountDownView: CircularCountDownView? = null
 
     private val displayManager by lazy {
         requireContext().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
@@ -134,7 +135,7 @@ class CameraFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? =
-        inflater.inflate(R.layout.fragment_camera, container, false)
+        inflater.inflate(R.layout.fragment_record_video, container, false)
 
     @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -305,21 +306,28 @@ class CameraFragment : Fragment() {
 
         btnRecord = controls.findViewById(R.id.btnRecord)
         btnRecord?.setOnTouchListener { view, motionEvent ->
-            if(motionEvent.action == MotionEvent.ACTION_DOWN) {
-                lastDown = System.currentTimeMillis();
-                startRecording()
-            } else if (motionEvent.action == MotionEvent.ACTION_UP) {
-                stopRecording()
-                lastDuration = System.currentTimeMillis() - lastDown;
-            }
-
-            true
+            recordButtonTouched(motionEvent)
         }
+
+        circularCountDownView = controls.findViewById(R.id.circularCountDown)
+    }
+
+    private fun recordButtonTouched(motionEvent: MotionEvent) : Boolean {
+        if(motionEvent.action == MotionEvent.ACTION_DOWN) {
+            lastDown = System.currentTimeMillis();
+            startRecording()
+        } else if (motionEvent.action == MotionEvent.ACTION_UP) {
+            stopRecording()
+            lastDuration = System.currentTimeMillis() - lastDown;
+        }
+
+        return true
     }
 
     private fun startRecording() {
         recording = true
         btnRecord?.setBackgroundResource(R.drawable.btn_record_focused)
+        circularCountDownView?.startCircleDrawing()
         videoCapture?.let { videoCapture ->
 
                 // Create output file to hold the image
