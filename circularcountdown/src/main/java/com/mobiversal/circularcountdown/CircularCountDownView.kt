@@ -8,6 +8,7 @@ import android.graphics.RectF
 import android.os.Handler
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 
 
@@ -29,7 +30,6 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
 
     private var circleBounds: RectF? = null
     private var radius = 0f
-    private var handleRadius = 0f
     private var textHeight = 0f
     private var textOffset = 0f
 
@@ -44,16 +44,10 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
         // used to fit the circle into
         circleBounds = RectF()
 
-        // size of circle and handle
-        radius = 100F
-        handleRadius = 10F
 
         // limit the counter to go up to maxTime ms
-        maxTime = 25000
+        maxTime = 15000
 
-        // start and current time
-        startTime = System.currentTimeMillis()
-        currentTime = startTime
 
 
         // the style of the 'progress'
@@ -62,13 +56,12 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
         progressPaint?.isAntiAlias = true
         progressPaint?.strokeWidth = 10F
         progressPaint?.strokeCap = Paint.Cap.SQUARE
-        progressPaint?.color = Color.parseColor("#00A9FF") // light blue
+        progressPaint?.color = Color.WHITE
 
 
         // the style for the text in the middle
         textPaint = TextPaint()
-        textPaint?.textSize = radius / 2
-        textPaint?.color = Color.BLACK
+        textPaint?.color = Color.WHITE
         textPaint?.textAlign = Paint.Align.CENTER
 
         // text attributes
@@ -77,6 +70,17 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
     }
 
     fun startCircleDrawing() {
+
+        // size of circle
+        radius = 120F// measuredWidth.toFloat()//100F
+        Log.d("TEST", "withd: $width + $measuredWidth")
+        textPaint?.textSize = radius / 2
+
+        // start and current time
+        startTime = System.currentTimeMillis()
+        currentTime = startTime
+
+
         // This will ensure the animation will run periodically
         viewHandler = Handler()
         updateView = Runnable { // update current time
@@ -119,14 +123,6 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
             centerWidth,
             centerHeight + textOffset,
             textPaint!!
-        )
-
-        // draw handle or the circle
-        canvas!!.drawCircle(
-            (centerWidth + Math.sin(progress * 2 * Math.PI) * radius).toFloat(),
-            (centerHeight - Math.cos(progress * 2 * Math.PI) * radius).toFloat(),
-            handleRadius,
-            progressPaint!!
         )
     }
 }
