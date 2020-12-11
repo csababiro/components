@@ -80,13 +80,13 @@ class RecordVideoActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCameraFragment() : CameraFragment? {
+    private fun getCameraFragment() : RecordVideoFragment? {
         val fragment: Fragment? = supportFragmentManager.findFragmentById(R.id.fragment_container)
         fragment?.let {
             val fragments = it.childFragmentManager.fragments
             if (fragments != null && fragments.size > 0) {
                 val myFragment = fragments[0]
-                if (myFragment is CameraFragment)
+                if (myFragment is RecordVideoFragment)
                     return myFragment
             }
         }

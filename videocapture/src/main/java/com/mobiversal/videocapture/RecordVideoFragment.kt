@@ -67,7 +67,7 @@ typealias LumaListener = (luma: Double) -> Unit
  * - Photo taking
  * - Image analysis
  */
-class CameraFragment : Fragment() {
+class RecordVideoFragment : Fragment() {
 
     private var recording = false
 
@@ -103,7 +103,7 @@ class CameraFragment : Fragment() {
         override fun onDisplayAdded(displayId: Int) = Unit
         override fun onDisplayRemoved(displayId: Int) = Unit
         override fun onDisplayChanged(displayId: Int) = view?.let { view ->
-            if (displayId == this@CameraFragment.displayId) {
+            if (displayId == this@RecordVideoFragment.displayId) {
                 Log.d(TAG, "Rotation changed: ${view.display.rotation}")
             }
         } ?: Unit
@@ -115,7 +115,7 @@ class CameraFragment : Fragment() {
         // user could have removed them while the app was in paused state.
         if (!PermissionsFragment.hasPermissions(requireContext())) {
             Navigation.findNavController(requireActivity(), R.id.fragment_container).navigate(
-                CameraFragmentDirections.actionCameraToPermissions()
+                RecordVideoFragmentDirections.actionCameraToPermissions()
             )
         }
     }
@@ -384,7 +384,7 @@ class CameraFragment : Fragment() {
         Log.d("TEST", "Result video path: " + outputFileResults.savedUri)
 
         val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
-        this@CameraFragment.savedUri = savedUri
+        this@RecordVideoFragment.savedUri = savedUri
         Log.d(TAG, "Video recording succeeded: $savedUri")
 
         // Implicit broadcasts will be ignored for devices running API level >= 24

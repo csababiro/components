@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/camera_fragment"
-        android:name="com.mobiversal.videocapture.CameraFragment"
+        android:name="com.mobiversal.videocapture.RecordVideoFragment"
         android:label="CameraFragment" >
 
         <action
