@@ -75,7 +75,6 @@
             android:layout_width="@dimen/round_button_large"
             android:layout_height="@dimen/round_button_large"
             android:scaleType="fitCenter"
-            android:background="@drawable/selector_btn_record"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

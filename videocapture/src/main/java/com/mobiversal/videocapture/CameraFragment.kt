@@ -84,6 +84,8 @@ class CameraFragment : Fragment() {
 
     var savedUri: Uri? = null
 
+    private var btnRecord: ImageButton? = null
+
     private val displayManager by lazy {
         requireContext().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     }
@@ -301,7 +303,8 @@ class CameraFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun initRecordButtonListener(controls: View) {
 
-        controls.findViewById<ImageButton>(R.id.btnRecord).setOnTouchListener { view, motionEvent ->
+        btnRecord = controls.findViewById(R.id.btnRecord)
+        btnRecord?.setOnTouchListener { view, motionEvent ->
             if(motionEvent.action == MotionEvent.ACTION_DOWN) {
                 lastDown = System.currentTimeMillis();
                 startRecording()
@@ -316,6 +319,7 @@ class CameraFragment : Fragment() {
 
     private fun startRecording() {
         recording = true
+        btnRecord?.setBackgroundResource(R.drawable.btn_record_focused)
         videoCapture?.let { videoCapture ->
 
                 // Create output file to hold the image
@@ -393,6 +397,7 @@ class CameraFragment : Fragment() {
     }
 
     private fun stopRecording() {
+        btnRecord?.setBackgroundResource(R.drawable.btn_record_normal)
         videoCapture?.stopRecording()
         recording = false
     }

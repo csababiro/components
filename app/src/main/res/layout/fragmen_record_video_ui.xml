@@ -54,17 +54,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <com.mobiversal.circularcountdown.CircularCountDown
+        <!--<com.mobiversal.circularcountdown.CircularCountDown
             android:id="@+id/circularCountDown"
             android:layout_width="110dp"
             android:layout_height="110dp"
-            android:background="@drawable/selector_btn_record"
             android:contentDescription="@string/capture_button_alt"
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
