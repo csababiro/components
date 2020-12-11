@@ -91,7 +91,7 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
             R.id.nav_gradient_loading_button ->
                 launchActivity<GradientLoadingButtonActivity>()
             R.id.nav_video_capture ->
-                RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO)
+                RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO, "Where do you see yourself in a year and why?")
             R.id.nav_spannable_text_view ->
                 launchActivity<SpannableTextViewActivity>()
             R.id.nav_see_more ->

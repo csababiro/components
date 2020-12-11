@@ -23,7 +23,7 @@ class RecordVideoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video_capture)
+        setContentView(R.layout.activity_record_video)
         container = findViewById(R.id.fragment_container)
     }
 
@@ -31,20 +31,21 @@ class RecordVideoActivity : AppCompatActivity() {
         super.onResume()
         // Before setting full screen flags, we must wait a bit to let UI settle; otherwise, we may
         // be trying to set app to immersive mode before it's ready and the flags do not stick
-        container.postDelayed(
-            { container.systemUiVisibility = FLAGS_FULLSCREEN },
-            IMMERSIVE_FLAG_TIMEOUT
-        )
+        container.postDelayed({ container.systemUiVisibility = FLAGS_FULLSCREEN }, IMMERSIVE_FLAG_TIMEOUT)
     }
 
     companion object {
 
-        fun openForResult(activity: Activity, requestCode: Int) {
+        var videoDescription = ""
+
+        fun openForResult(activity: Activity, requestCode: Int, description: String) {
+            videoDescription = description
             val intent = Intent(activity, RecordVideoActivity::class.java)
             activity.startActivityForResult(intent, requestCode)
         }
 
-        fun openForResult(fragment: Fragment, requestCode: Int) {
+        fun openForResult(fragment: Fragment, requestCode: Int, description: String) {
+            videoDescription = description
             val intent = Intent(fragment.context, RecordVideoActivity::class.java)
             fragment.startActivityForResult(intent, requestCode)
         }
@@ -73,13 +74,20 @@ class RecordVideoActivity : AppCompatActivity() {
     }
 
     private fun getVideoUri(): Uri? {
+        val cameraFragment = getCameraFragment()
+        cameraFragment.let {
+            return it?.savedUri
+        }
+    }
+
+    private fun getCameraFragment() : CameraFragment? {
         val fragment: Fragment? = supportFragmentManager.findFragmentById(R.id.fragment_container)
         fragment?.let {
             val fragments = it.childFragmentManager.fragments
             if (fragments != null && fragments.size > 0) {
                 val myFragment = fragments[0]
                 if (myFragment is CameraFragment)
-                    return myFragment.savedUri
+                    return myFragment
             }
         }
         return null
