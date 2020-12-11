@@ -48,4 +48,5 @@ dependencies {
     implementation project(path: ':spannablecheckbox')
     implementation project(path: ':spannabletextview')
     implementation project(path: ':seemoretextview')
+    implementation project(path: ':circularcountdown')
 }
