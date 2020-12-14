@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.mobiversal.kotlinextensions.activity.launchActivity
 import com.mobiversal.videocapture.KEY_VIDEO_URI
 import com.mobiversal.videocapture.RecordVideoActivity
+import com.mobiversal.videocapture.RecordVideoParams
 
 const val REQUEST_CODE_RECORD_VIDEO = 1311
 
@@ -43,7 +44,17 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
 
         navView.setNavigationItemSelectedListener(this)
 
-        RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO, "Where do you see yourself in a year and why?")
+        startRecordVideoActivity()
+    }
+
+    private fun startRecordVideoActivity() {
+        val params = RecordVideoParams(
+            "Where do you see yourself in a year and why?",
+            5000,
+            "Title",
+            "Min 5 seconds"
+        )
+        RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO, params)
     }
 
     override fun onBackPressed() {
@@ -93,7 +104,7 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
             R.id.nav_gradient_loading_button ->
                 launchActivity<GradientLoadingButtonActivity>()
             R.id.nav_video_capture ->
-                RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO, "Where do you see yourself in a year and why?")
+                startRecordVideoActivity()
             R.id.nav_spannable_text_view ->
                 launchActivity<SpannableTextViewActivity>()
             R.id.nav_see_more ->

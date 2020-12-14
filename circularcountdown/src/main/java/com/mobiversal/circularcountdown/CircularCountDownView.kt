@@ -19,7 +19,11 @@ import android.view.View
 
 private const val DEFAULT_DURATION_MILLIS = 15000L
 
-class CircularCountDownView @JvmOverloads constructor(context: Context, val attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
+class CircularCountDownView @JvmOverloads constructor(
+    context: Context,
+    val attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
     private var progressPaint: Paint? = null
     private var textPaint: Paint? = null
@@ -38,6 +42,8 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
 
     private var viewHandler: Handler? = null
     private var updateView: Runnable? = null
+
+    var countDownListener: CountDownListener? = null
 
     init {
         initView()
@@ -101,12 +107,28 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
             // get elapsed time in milliseconds and clamp between <0, maxTime>
             progressMillisecond = (currentTime - startTime) % maxTime
 
+            //Log.d("TEST", "Progress Millis: $progressMillisecond")
+            countDownListener?.countDown(progressMillisecond)
+
             // get current progress on a range <0, 1>
             progress = progressMillisecond.toDouble() / maxTime
             this@CircularCountDownView.invalidate()
             viewHandler?.postDelayed(updateView!!, 1000 / 60)
         }
         viewHandler?.post(updateView!!)
+    }
+
+    fun stopCircleDrawing() {
+        updateView?.let { updateView ->
+            viewHandler?.removeCallbacks(updateView)
+        }
+    }
+
+    fun resetCircleDrawing() {
+        progressMillisecond = 0
+        progress = 0.0
+        initView()
+        invalidate()
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -118,14 +140,25 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
 
 
         // set bound of our circle in the middle of the view
-        circleBounds!![centerWidth - radius, centerHeight - radius, centerWidth + radius] = centerHeight + radius
+        circleBounds!![centerWidth - radius, centerHeight - radius, centerWidth + radius] =
+            centerHeight + radius
 
 
         // we want to start at -90°, 0° is pointing to the right
-        canvas!!.drawArc(circleBounds!!, (-90).toFloat(), (progress * 360).toFloat(), false, progressPaint!!)
+        canvas!!.drawArc(
+            circleBounds!!,
+            (-90).toFloat(),
+            (progress * 360).toFloat(),
+            false,
+            progressPaint!!
+        )
 
         // display text inside the circle
-        canvas!!.drawText(((progressMillisecond / 100).toDouble() / 10).toString() + "s", centerWidth, centerHeight + textOffset, textPaint!!
+        canvas!!.drawText(
+            ((progressMillisecond / 100).toDouble() / 10).toString() + "s",
+            centerWidth,
+            centerHeight + textOffset,
+            textPaint!!
         )
     }
 }

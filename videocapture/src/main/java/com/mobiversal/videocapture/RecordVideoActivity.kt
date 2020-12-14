@@ -36,16 +36,17 @@ class RecordVideoActivity : AppCompatActivity() {
 
     companion object {
 
-        var videoDescription = ""
+        // need new way to pass to the fragment
+        lateinit var videoParams: RecordVideoParams
 
-        fun openForResult(activity: Activity, requestCode: Int, description: String) {
-            videoDescription = description
+        fun openForResult(activity: Activity, requestCode: Int, params: RecordVideoParams) {
+            videoParams = params
             val intent = Intent(activity, RecordVideoActivity::class.java)
             activity.startActivityForResult(intent, requestCode)
         }
 
-        fun openForResult(fragment: Fragment, requestCode: Int, description: String) {
-            videoDescription = description
+        fun openForResult(fragment: Fragment, requestCode: Int, params: RecordVideoParams) {
+            videoParams = params
             val intent = Intent(fragment.context, RecordVideoActivity::class.java)
             fragment.startActivityForResult(intent, requestCode)
         }

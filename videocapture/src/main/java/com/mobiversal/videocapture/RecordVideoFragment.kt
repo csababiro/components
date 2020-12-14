@@ -46,9 +46,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.android.example.cameraxbasic.utils.ANIMATION_FAST_MILLIS
 import com.android.example.cameraxbasic.utils.ANIMATION_SLOW_MILLIS
 import com.mobiversal.circularcountdown.CircularCountDownView
+import com.mobiversal.circularcountdown.CountDownListener
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -86,6 +89,8 @@ class RecordVideoFragment : Fragment() {
 
     private var btnRecord: ImageButton? = null
     private var circularCountDownView: CircularCountDownView? = null
+
+    private var recordingElapsedMillis = 0L
 
     private val displayManager by lazy {
         requireContext().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
@@ -291,7 +296,7 @@ class RecordVideoFragment : Fragment() {
         // Inflate a new view containing all UI for controlling the camera
         val controls = View.inflate(requireContext(), R.layout.fragmen_record_video_ui, container)
 
-        controls.findViewById<TextView>(R.id.txtBottomScrim).text = RecordVideoActivity.videoDescription
+        controls.findViewById<TextView>(R.id.txtBottomScrim).text = RecordVideoActivity.videoParams.description
 
         controls.findViewById<ImageButton>(R.id.btnBackRecordVideo).setOnClickListener { finishActivity() }
 
@@ -310,6 +315,12 @@ class RecordVideoFragment : Fragment() {
         }
 
         circularCountDownView = controls.findViewById(R.id.circularCountDown)
+        circularCountDownView?.countDownListener = object : CountDownListener {
+            override fun countDown(millis: Long) {
+                //Log.d("TEST", "Millis: $millis")
+                recordingElapsedMillis = millis
+            }
+        }
     }
 
     private fun recordButtonTouched(motionEvent: MotionEvent) : Boolean {
@@ -401,12 +412,32 @@ class RecordVideoFragment : Fragment() {
             Log.d(TAG, "Video recording scanned into media store: $uri")
         }
 
-        finishActivity()
+        if(recordingElapsedMillis > RecordVideoActivity.videoParams.minVideoLengthMillis)
+            finishActivity()
+        else
+            showTheVideoIsTooShortPopup()
+    }
+
+    private fun showTheVideoIsTooShortPopup() {
+        activity?.let { activity ->
+            activity.runOnUiThread {
+                val title = RecordVideoActivity.videoParams.minVideoErrorTitle
+                val description = RecordVideoActivity.videoParams.minVideoErrorDescription
+                MaterialDialog(activity)
+                    .cancelable(true)
+                    .title(text = title)
+                    .positiveButton(text ="OK")
+                    .message(text = description)
+                    .onDismiss { circularCountDownView?.resetCircleDrawing() }
+                    .show()
+            }
+        }
     }
 
     private fun stopRecording() {
         btnRecord?.setBackgroundResource(R.drawable.btn_record_normal)
         videoCapture?.stopRecording()
+        circularCountDownView?.stopCircleDrawing()
         recording = false
     }
 
