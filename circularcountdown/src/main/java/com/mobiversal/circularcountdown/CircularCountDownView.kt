@@ -16,6 +16,9 @@ import android.view.View
  * Created by Biro Csaba on 11/12/2020.
  */
 // inspired from: https://stackoverflow.com/questions/14529010/how-can-i-program-a-rotating-circular-animation-such-as-this-one-picture-attach
+
+private const val DEFAULT_DURATION_MILLIS = 15000L
+
 class CircularCountDownView @JvmOverloads constructor(context: Context, val attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
     private var progressPaint: Paint? = null
@@ -41,15 +44,23 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
     }
 
     private fun initView() {
+        initCircleBounds()
+        initMaxTime()
+        initCircleStyle()
+        initTextStyle()
+    }
+
+    private fun initCircleBounds() {
         // used to fit the circle into
         circleBounds = RectF()
+    }
 
-
+    private fun initMaxTime() {
         // limit the counter to go up to maxTime ms
-        maxTime = 15000
+        maxTime = DEFAULT_DURATION_MILLIS
+    }
 
-
-
+    private fun initCircleStyle() {
         // the style of the 'progress'
         progressPaint = Paint()
         progressPaint?.style = Paint.Style.STROKE
@@ -57,8 +68,9 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
         progressPaint?.strokeWidth = 10F
         progressPaint?.strokeCap = Paint.Cap.SQUARE
         progressPaint?.color = Color.WHITE
+    }
 
-
+    private fun initTextStyle() {
         // the style for the text in the middle
         textPaint = TextPaint()
         textPaint?.color = Color.WHITE
@@ -66,7 +78,7 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
 
         // text attributes
         textHeight = textPaint?.descent() ?: 0F - (textPaint?.ascent() ?: 0F)
-        textOffset = textHeight / 2 - (textPaint?.descent() ?: 0F)
+        textOffset = 4.dpToPx() + (textPaint?.descent() ?: 0F)
     }
 
     fun startCircleDrawing() {
@@ -79,7 +91,6 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
         // start and current time
         startTime = System.currentTimeMillis()
         currentTime = startTime
-
 
         // This will ensure the animation will run periodically
         viewHandler = Handler()
@@ -110,19 +121,10 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
 
 
         // we want to start at -90°, 0° is pointing to the right
-        canvas!!.drawArc(
-            circleBounds!!,
-            (-90).toFloat(),
-            (progress * 360).toFloat(), false,
-            progressPaint!!
-        )
+        canvas!!.drawArc(circleBounds!!, (-90).toFloat(), (progress * 360).toFloat(), false, progressPaint!!)
 
         // display text inside the circle
-        canvas!!.drawText(
-            ((progressMillisecond / 100).toDouble() / 10).toString() + "s",
-            centerWidth,
-            centerHeight + textOffset,
-            textPaint!!
+        canvas!!.drawText(((progressMillisecond / 100).toDouble() / 10).toString() + "s", centerWidth, centerHeight + textOffset, textPaint!!
         )
     }
 }
