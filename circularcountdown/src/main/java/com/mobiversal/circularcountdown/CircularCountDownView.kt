@@ -73,6 +73,7 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
     private fun initTextStyle() {
         // the style for the text in the middle
         textPaint = TextPaint()
+        textPaint?.textSize = radius / 2
         textPaint?.color = Color.WHITE
         textPaint?.textAlign = Paint.Align.CENTER
 
