@@ -10,11 +10,13 @@ data class RecordVideoParams(
     val description: String,
     val minVideoLengthMillis: Long,
     val minVideoErrorTitle: String,
-    val minVideoErrorDescription: String
+    val minVideoErrorDescription: String,
+    val mindVideoErrorPositiveButton: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString() ?: "",
         source.readLong(),
+        source.readString() ?: "",
         source.readString() ?: "",
         source.readString() ?: ""
     )
@@ -26,6 +28,7 @@ data class RecordVideoParams(
         writeLong(minVideoLengthMillis)
         writeString(minVideoErrorTitle)
         writeString(minVideoErrorDescription)
+        writeString(mindVideoErrorPositiveButton)
     }
 
     companion object {
