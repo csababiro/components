@@ -107,7 +107,7 @@ class CircularCountDownView @JvmOverloads constructor(
             // get elapsed time in milliseconds and clamp between <0, maxTime>
             progressMillisecond = (currentTime - startTime) % maxTime
 
-            //Log.d("TEST", "Progress Millis: $progressMillisecond")
+            Log.d("TEST", "Progress Millis: $progressMillisecond")
             countDownListener?.countDown(progressMillisecond)
 
             // get current progress on a range <0, 1>

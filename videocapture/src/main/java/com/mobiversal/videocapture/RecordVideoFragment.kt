@@ -317,7 +317,7 @@ class RecordVideoFragment : Fragment() {
         circularCountDownView = controls.findViewById(R.id.circularCountDown)
         circularCountDownView?.countDownListener = object : CountDownListener {
             override fun countDown(millis: Long) {
-                //Log.d("TEST", "Millis: $millis")
+                Log.d("TEST", "Millis: $millis")
                 recordingElapsedMillis = millis
             }
         }
