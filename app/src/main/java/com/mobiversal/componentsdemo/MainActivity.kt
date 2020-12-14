@@ -52,7 +52,8 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
             "Where do you see yourself in a year and why?",
             5000,
             "Title",
-            "Min 5 seconds"
+            "Min 5 seconds",
+            "OK"
         )
         RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO, params)
     }
