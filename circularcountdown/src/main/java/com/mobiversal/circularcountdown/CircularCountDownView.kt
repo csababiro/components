@@ -72,8 +72,8 @@ class CircularCountDownView @JvmOverloads constructor(context: Context, val attr
     fun startCircleDrawing() {
 
         // size of circle
-        radius = 120F// measuredWidth.toFloat()//100F
-        Log.d("TEST", "withd: $width + $measuredWidth")
+        radius = width.toFloat() - 48.dpToPx()
+        Log.d("TEST", "width: $width + $measuredWidth")
         textPaint?.textSize = radius / 2
 
         // start and current time

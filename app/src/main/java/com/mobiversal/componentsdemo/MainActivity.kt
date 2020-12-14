@@ -42,6 +42,8 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+
+        RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO, "Where do you see yourself in a year and why?")
     }
 
     override fun onBackPressed() {
