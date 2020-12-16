@@ -70,8 +70,10 @@ class RecordVideoActivity : AppCompatActivity() {
     private fun sendResultBack() {
         val resultIntent = Intent()
         val uri = getVideoUri()
-        resultIntent.putExtra(KEY_VIDEO_URI, uri)
-        setResult(Activity.RESULT_OK, resultIntent)
+        uri?.let {
+            resultIntent.putExtra(KEY_VIDEO_URI, uri)
+            setResult(Activity.RESULT_OK, resultIntent)
+        }
     }
 
     private fun getVideoUri(): Uri? {

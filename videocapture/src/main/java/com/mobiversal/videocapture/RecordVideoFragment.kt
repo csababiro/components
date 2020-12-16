@@ -21,7 +21,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.ImageFormat
 import android.graphics.drawable.ColorDrawable
+import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraManager
+import android.hardware.camera2.params.StreamConfigurationMap
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
 import android.net.Uri
@@ -30,10 +34,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.webkit.MimeTypeMap
 import android.widget.ImageButton
 import android.widget.TextView
@@ -215,7 +216,8 @@ class RecordVideoFragment : Fragment() {
         Log.d(TAG, "Screen metrics: ${metrics.widthPixels} x ${metrics.heightPixels}")
 
         val screenAspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
-        val screenSize = getVideoSize()
+        val screenSize = Size(metrics.widthPixels, metrics.heightPixels)// getVideoSize()
+        test()
         Log.d(TAG, "Preview aspect ratio: $screenAspectRatio")
 
         val rotation = viewFinder.display.rotation
@@ -230,8 +232,8 @@ class RecordVideoFragment : Fragment() {
         // Preview
         preview = Preview.Builder()
             // We request aspect ratio but no resolution
-            //.setTargetAspectRatio(screenAspectRatio)
-            .setTargetResolution(screenSize)
+            .setTargetAspectRatio(screenAspectRatio)
+            //.setTargetResolution(screenSize)
             // Set initial target rotation
             .setTargetRotation(rotation)
             .build()
@@ -296,12 +298,29 @@ class RecordVideoFragment : Fragment() {
         // Inflate a new view containing all UI for controlling the camera
         val controls = View.inflate(requireContext(), R.layout.fragmen_record_video_ui, container)
 
-        controls.findViewById<TextView>(R.id.txtBottomScrim).text = RecordVideoActivity.videoParams.description
+        controls.findViewById<TextView>(R.id.txtBottomScrim).text =
+            RecordVideoActivity.videoParams.description
 
-        controls.findViewById<ImageButton>(R.id.btnBackRecordVideo).setOnClickListener { finishActivity() }
+        controls.findViewById<ImageButton>(R.id.btnBackRecordVideo)
+            .setOnClickListener {
+                savedUri = null
+                finishActivity()
+            }
+
+        view?.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                savedUri = null
+                true
+            }
+            else
+                false
+        }
+
 
         initRecordButtonListener(controls)
     }
+
+
 
     private var lastDown: Long = 0
     private var lastDuration: Long = 0
@@ -323,8 +342,8 @@ class RecordVideoFragment : Fragment() {
         }
     }
 
-    private fun recordButtonTouched(motionEvent: MotionEvent) : Boolean {
-        if(motionEvent.action == MotionEvent.ACTION_DOWN) {
+    private fun recordButtonTouched(motionEvent: MotionEvent): Boolean {
+        if (motionEvent.action == MotionEvent.ACTION_DOWN) {
             lastDown = System.currentTimeMillis();
             startRecording()
         } else if (motionEvent.action == MotionEvent.ACTION_UP) {
@@ -341,53 +360,53 @@ class RecordVideoFragment : Fragment() {
         circularCountDownView?.startCircleDrawing()
         videoCapture?.let { videoCapture ->
 
-                // Create output file to hold the image
-                val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
+            // Create output file to hold the image
+            val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
 
-                // Setup image capture metadata
-                val metadata = Metadata().apply {
+            // Setup image capture metadata
+            val metadata = Metadata().apply {
 
-                    // Mirror image when using the front camera
-                    isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
-                }
+                // Mirror image when using the front camera
+                isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
+            }
 
-                // Create output options object which contains file + metadata
-                val outputOptions = VideoCapture.OutputFileOptions.Builder(photoFile)
-                    //.setMetadata(metadata) TODO
-                    .build()
+            // Create output options object which contains file + metadata
+            val outputOptions = VideoCapture.OutputFileOptions.Builder(photoFile)
+                //.setMetadata(metadata) TODO
+                .build()
 //                    ImageCapture.OutputFileOptions.Builder(photoFile)
 //                        .setMetadata(metadata)
 //                        .build() TODO remove
 
-                videoCapture.startRecording(
-                    outputOptions,
-                    cameraExecutor,
-                    object : VideoCapture.OnVideoSavedCallback {
+            videoCapture.startRecording(
+                outputOptions,
+                cameraExecutor,
+                object : VideoCapture.OnVideoSavedCallback {
 
-                        override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
-                           videoSaved(outputFileResults, photoFile)
-                        }
+                    override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
+                        videoSaved(outputFileResults, photoFile)
+                    }
 
-                        override fun onError(
-                            videoCaptureError: Int,
-                            message: String,
-                            cause: Throwable?
-                        ) {
-                            TODO("Not yet implemented")
-                        }
-                    })
+                    override fun onError(
+                        videoCaptureError: Int,
+                        message: String,
+                        cause: Throwable?
+                    ) {
+                        TODO("Not yet implemented")
+                    }
+                })
 
-                // We can only change the foreground Drawable using API level 23+ API
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // We can only change the foreground Drawable using API level 23+ API
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-                    // Display flash animation to indicate that photo was captured
-                    container.postDelayed({
-                        container.foreground = ColorDrawable(Color.WHITE)
-                        container.postDelayed(
-                            { container.foreground = null }, ANIMATION_FAST_MILLIS
-                        )
-                    }, ANIMATION_SLOW_MILLIS)
-                }
+                // Display flash animation to indicate that photo was captured
+                container.postDelayed({
+                    container.foreground = ColorDrawable(Color.WHITE)
+                    container.postDelayed(
+                        { container.foreground = null }, ANIMATION_FAST_MILLIS
+                    )
+                }, ANIMATION_SLOW_MILLIS)
+            }
         }
     }
 
@@ -401,18 +420,28 @@ class RecordVideoFragment : Fragment() {
         // Implicit broadcasts will be ignored for devices running API level >= 24
         // so if you only target API level 24+ you can remove this statement
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            requireActivity().sendBroadcast(Intent(android.hardware.Camera.ACTION_NEW_VIDEO, savedUri))
+            requireActivity().sendBroadcast(
+                Intent(
+                    android.hardware.Camera.ACTION_NEW_VIDEO,
+                    savedUri
+                )
+            )
         }
 
         // If the folder selected is an external media directory, this is
         // unnecessary but otherwise other apps will not be able to access our
         // images unless we scan them using [MediaScannerConnection]
-        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(savedUri.toFile().extension)
-        MediaScannerConnection.scanFile(context, arrayOf(savedUri.toFile().absolutePath), arrayOf(mimeType)) { _, uri ->
+        val mimeType =
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(savedUri.toFile().extension)
+        MediaScannerConnection.scanFile(
+            context,
+            arrayOf(savedUri.toFile().absolutePath),
+            arrayOf(mimeType)
+        ) { _, uri ->
             Log.d(TAG, "Video recording scanned into media store: $uri")
         }
 
-        if(recordingElapsedMillis > RecordVideoActivity.videoParams.minVideoLengthMillis)
+        if (recordingElapsedMillis > RecordVideoActivity.videoParams.minVideoLengthMillis)
             finishActivity()
         else
             showTheVideoIsTooShortPopup()
@@ -426,7 +455,7 @@ class RecordVideoFragment : Fragment() {
                 MaterialDialog(activity)
                     .cancelable(true)
                     .title(text = title)
-                    .positiveButton(text ="OK")
+                    .positiveButton(text = "OK")
                     .message(text = description)
                     .onDismiss { circularCountDownView?.resetCircleDrawing() }
                     .show()
@@ -471,7 +500,28 @@ class RecordVideoFragment : Fragment() {
             )
     }
 
+    private fun test() {
+        context?.let {
+            val cameraManager: CameraManager = it.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+
+            cameraManager.cameraIdList.forEach {
+
+                val cameraCharacteristics: CameraCharacteristics = cameraManager.getCameraCharacteristics(it)
+
+                val streamConfigurationMap: StreamConfigurationMap? = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+
+                val sizes: Array<Size>? = streamConfigurationMap?.getOutputSizes(ImageFormat.RAW_SENSOR)
+
+                sizes?.forEach { size ->
+                    Log.d("TEST", "Camera resolution: ${size.width} - ${size.height}")
+                }
+            }
+
+        }
+    }
+
     private fun getVideoSize(): Size {
-        return Size(1280, 720)
+        //return Size(1280, 720)
+        return Size(2608, 1960) // Samsung s7
     }
 }
