@@ -395,18 +395,6 @@ class RecordVideoFragment : Fragment() {
                         TODO("Not yet implemented")
                     }
                 })
-
-            // We can only change the foreground Drawable using API level 23+ API
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                // Display flash animation to indicate that photo was captured
-                container.postDelayed({
-                    container.foreground = ColorDrawable(Color.WHITE)
-                    container.postDelayed(
-                        { container.foreground = null }, ANIMATION_FAST_MILLIS
-                    )
-                }, ANIMATION_SLOW_MILLIS)
-            }
         }
     }
 
