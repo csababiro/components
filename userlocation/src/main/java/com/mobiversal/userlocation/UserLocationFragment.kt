@@ -61,7 +61,7 @@ abstract class UserLocationFragment : Fragment() {
         }
     }
 
-    private fun getLocation(activity: Activity) {
+    protected fun getLocation(activity: Activity) {
         if (mFusedLocationClient == null)
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
         //getLastKnownLocation(mFusedLocationClient!!) not needed now
