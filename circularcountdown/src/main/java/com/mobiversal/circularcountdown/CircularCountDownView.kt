@@ -153,12 +153,12 @@ class CircularCountDownView @JvmOverloads constructor(
             progressPaint!!
         )
 
-        // display text inside the circle
-        canvas!!.drawText(
-            ((progressMillisecond / 100).toDouble() / 10).toString() + "s",
-            centerWidth,
-            centerHeight + textOffset,
-            textPaint!!
-        )
+//        // display text inside the circle
+//        canvas!!.drawText(
+//            ((progressMillisecond / 100).toDouble() / 10).toString() + "s",
+//            centerWidth,
+//            centerHeight + textOffset,
+//            textPaint!!
+//        )
     }
 }
