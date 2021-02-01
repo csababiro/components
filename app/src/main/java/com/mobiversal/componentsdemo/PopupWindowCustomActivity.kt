@@ -22,7 +22,7 @@ class PopupWindowCustomActivity : ParentActivity() {
                 }
             })
 
-            popupWindowCustom.showPopupWindow(imgOption1)
+            popupWindowCustom.showPopupWindowAtCoordinates(50, 50, this, imgOption1)
         }
 
 
