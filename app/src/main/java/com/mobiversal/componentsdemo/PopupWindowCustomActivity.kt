@@ -104,11 +104,11 @@ class PopupWindowCustomActivity : ParentActivity() {
 
         val popupWindowItems = mutableListOf<PopupWindowItem>()
 
-        popupWindowItems.add(PopupWindowItem("First option").apply { isSelected = true })
-        popupWindowItems.add(PopupWindowItem("Second optiosd fsdf sdfsn"))
-        popupWindowItems.add(PopupWindowItem("Third option"))
-        popupWindowItems.add(PopupWindowItem("Fourth option"))
-        popupWindowItems.add(PopupWindowItem("Fifth option"))
+        popupWindowItems.add(PopupWindowItem(1, "First option").apply { isSelected = true })
+        popupWindowItems.add(PopupWindowItem(2, "Second optiosd fsdf sdfsn"))
+        popupWindowItems.add(PopupWindowItem(3, "Third option"))
+        popupWindowItems.add(PopupWindowItem(4, "Fourth option"))
+        popupWindowItems.add(PopupWindowItem(5, "Fifth option"))
 
         return popupWindowItems
     }
@@ -117,11 +117,11 @@ class PopupWindowCustomActivity : ParentActivity() {
 
         val popupWindowItems = mutableListOf<PopupWindowItem>()
 
-        popupWindowItems.add(PopupWindowItem("First option"))
-        popupWindowItems.add(PopupWindowItem("Second optiosd fsdf sdfsn"))
-        popupWindowItems.add(PopupWindowItem("Third option"))
-        popupWindowItems.add(PopupWindowItem("Fourth option"))
-        popupWindowItems.add(PopupWindowItem("Fifth option"))
+        popupWindowItems.add(PopupWindowItem(1, "First option"))
+        popupWindowItems.add(PopupWindowItem(2, "Second optiosd fsdf sdfsn"))
+        popupWindowItems.add(PopupWindowItem(3, "Third option"))
+        popupWindowItems.add(PopupWindowItem(4, "Fourth option"))
+        popupWindowItems.add(PopupWindowItem(5, "Fifth option"))
 
         return popupWindowItems
     }
@@ -131,11 +131,11 @@ class PopupWindowCustomActivity : ParentActivity() {
 
         val popupWindowItems = mutableListOf<PopupWindowItem>()
 
-        popupWindowItems.add(PopupWindowItem("First option", R.drawable.job_pin_completed).apply { isSelected = true })
-        popupWindowItems.add(PopupWindowItem("Second optiosd fsdf sdfsn dafjg sdl glksdjgl sdg", R.drawable.job_pin_in_progress))
-        popupWindowItems.add(PopupWindowItem("Third option", R.drawable.job_pin_to_do))
-        popupWindowItems.add(PopupWindowItem("Fourth option", R.drawable.job_pin_urgent))
-        popupWindowItems.add(PopupWindowItem("Fifth option", R.drawable.on_the_way_bullet))
+        popupWindowItems.add(PopupWindowItem(1, "First option", iconResource = R.drawable.job_pin_completed).apply { isSelected = true })
+        popupWindowItems.add(PopupWindowItem(2, "Second optiosd fsdf sdfsn dafjg sdl glksdjgl sdg", iconResource = R.drawable.job_pin_in_progress))
+        popupWindowItems.add(PopupWindowItem(3, "Third option", iconResource = R.drawable.job_pin_to_do))
+        popupWindowItems.add(PopupWindowItem(4, "Fourth option", iconResource = R.drawable.job_pin_urgent))
+        popupWindowItems.add(PopupWindowItem(5, "Fifth option", iconResource = R.drawable.on_the_way_bullet))
 
         return popupWindowItems
     }
