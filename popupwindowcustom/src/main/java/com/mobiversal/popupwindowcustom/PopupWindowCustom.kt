@@ -1,5 +1,6 @@
 package com.mobiversal.popupwindowcustom
 
+import android.content.Context
 import android.os.Build
 import android.util.TypedValue
 import android.view.Gravity
@@ -22,8 +23,8 @@ class PopupWindowCustom(
     private var selectedIndex: Int = NO_ITEM_SELECTED
 
     var largeView: Boolean = false
-    var gravity = Gravity.RIGHT or Gravity.TOP
-    var topMargin = 0
+    var gravity = Gravity.START and Gravity.TOP
+    var gravityCentered = Gravity.CENTER
 
     var showSelectedCheck = false
 
@@ -34,34 +35,37 @@ class PopupWindowCustom(
 
     fun showPopupWindow(anchorView: View) {
 
-        if (items == null)
+        if (items.isEmpty())
             return
 
         val popupWindow = PopupWindow()
         applyParams(popupWindow)
         popupWindow.contentView = getContent(popupWindow, anchorView)
-
         // place the popup window
         val coordinates = getCoordinates(anchorView)
-        popupWindow.showAtLocation(anchorView, gravity, coordinates.x, coordinates.y)
+        popupWindow.showAtLocation(anchorView, gravity, coordinates.x-17, coordinates.y)
     }
 
     private fun getCoordinates(anchorView: View): XYCoordinates {
         val coordinates = XYCoordinates()
+
         val location = IntArray(2)
-        anchorView.getLocationInWindow(location)
+        anchorView.getLocationOnScreen(location)
 
-        val dp16 = 16.pxToDp()
-        val rightDistance = dp16 - 5.5f.pxToDp()
-        val topDistance = location[1] + dp16 + topMargin
-
-        val x = rightDistance + 196.pxToDp()
-        val y = topDistance - 8.pxToDp()
-
-        coordinates.x = x
-        coordinates.y = y
+        coordinates.x = location[0]
+        coordinates.y = location[1]
 
         return coordinates
+    }
+
+    fun showPopupWindowAtCoordinates(x: Int, y: Int, context: Context, parent: View){
+        if (items.isEmpty())
+            return
+
+        val popupWindow = PopupWindow()
+        applyParams(popupWindow)
+        popupWindow.contentView = getContentWithContext(popupWindow, context)
+        popupWindow.showAtLocation(parent, gravity, x, y)
     }
 
     private fun applyParams(popupWindow: PopupWindow) {
@@ -76,6 +80,14 @@ class PopupWindowCustom(
 
     private fun getContent(popupWindow: PopupWindow, anchorView: View): View {
         val content = LayoutInflater.from(anchorView.context).inflate(R.layout.popup_window, null)
+
+        createRows(content, popupWindow)
+
+        return content
+    }
+
+    private fun getContentWithContext(popupWindow: PopupWindow, context: Context): View {
+        val content = LayoutInflater.from(context).inflate(R.layout.popup_window, null)
 
         createRows(content, popupWindow)
 
