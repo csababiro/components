@@ -2,11 +2,9 @@ package com.mobiversal.componentsdemo
 
 import android.graphics.Color
 import android.os.Bundle
-import com.mobiversal.fieldvibe.commoncore.view.custompopupwindow.PopupWindowResponse
+import com.mobiversal.popupwindowcustom.PopupWindowResponse
 import com.mobiversal.popupwindowcustom.PopupWindowCustom
 import com.mobiversal.popupwindowcustom.PopupWindowItem
-import com.mobiversal.popupwindowcustom.dpToPx
-import com.mobiversal.popupwindowcustom.pxToDp
 import kotlinx.android.synthetic.main.activity_popup_window_custom.*
 
 class PopupWindowCustomActivity : ParentActivity() {

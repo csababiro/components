@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.mobiversal.fieldvibe.commoncore.view.custompopupwindow.PopupWindowResponse
 import kotlinx.android.synthetic.main.popup_window.view.*
 import kotlinx.android.synthetic.main.row_popup_window.view.*
 
@@ -24,7 +23,7 @@ class PopupWindowCustom(
 
     var largeView: Boolean = false
     var gravity = Gravity.RIGHT or Gravity.TOP
-    var topMaring = 0
+    var topMargin = 0
 
     var showSelectedCheck = false
 
@@ -54,7 +53,7 @@ class PopupWindowCustom(
 
         val dp16 = 16.pxToDp()
         val rightDistance = dp16 - 5.5f.pxToDp()
-        val topDistance = location[1] + dp16 + topMaring
+        val topDistance = location[1] + dp16 + topMargin
 
         val x = rightDistance + 196.pxToDp()
         val y = topDistance - 8.pxToDp()

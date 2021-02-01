@@ -1,6 +1,4 @@
-package com.mobiversal.fieldvibe.commoncore.view.custompopupwindow
-
-import com.mobiversal.popupwindowcustom.PopupWindowItem
+package com.mobiversal.popupwindowcustom
 
 interface PopupWindowResponse {
 
