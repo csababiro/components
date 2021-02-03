@@ -354,6 +354,7 @@ class RecordVideoFragment : Fragment() {
         return true
     }
 
+    @SuppressLint("RestrictedApi")
     private fun startRecording() {
         recording = true
         btnRecord?.setBackgroundResource(R.drawable.btn_record_focused)
@@ -374,9 +375,6 @@ class RecordVideoFragment : Fragment() {
             val outputOptions = VideoCapture.OutputFileOptions.Builder(photoFile)
                 //.setMetadata(metadata) TODO
                 .build()
-//                    ImageCapture.OutputFileOptions.Builder(photoFile)
-//                        .setMetadata(metadata)
-//                        .build() TODO remove
 
             videoCapture.startRecording(
                 outputOptions,
@@ -387,12 +385,9 @@ class RecordVideoFragment : Fragment() {
                         videoSaved(outputFileResults, photoFile)
                     }
 
-                    override fun onError(
-                        videoCaptureError: Int,
-                        message: String,
-                        cause: Throwable?
-                    ) {
-                        TODO("Not yet implemented")
+                    override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
+                        Log.d("TEST", "startRecording: error $videoCaptureError $message")
+                        cause?.printStackTrace()
                     }
                 })
         }
