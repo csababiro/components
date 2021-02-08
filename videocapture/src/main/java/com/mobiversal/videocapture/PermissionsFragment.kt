@@ -19,7 +19,6 @@ package com.mobiversal.videocapture
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -34,8 +33,8 @@ private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA, Manifest.
  */
 class PermissionsFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         if (!hasPermissions(requireContext())) {
             // Request camera-related permissions
@@ -43,7 +42,7 @@ class PermissionsFragment : Fragment() {
         } else {
             // If permissions have already been granted, proceed
             Navigation.findNavController(requireActivity(), R.id.fragment_container).navigate(
-                    PermissionsFragmentDirections.actionPermissionsToCamera())
+                PermissionsFragmentDirections.actionPermissionsToCamera())
         }
     }
 
