@@ -22,9 +22,9 @@ class RecordVideoActivity : AppCompatActivity() {
     private lateinit var container: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record_video)
-        container = findViewById(R.id.fragment_container)
+        super.onCreate(savedInstanceState)
+        container = findViewById(R.id.fragment_record_container)
     }
 
     override fun onResume() {
@@ -84,7 +84,7 @@ class RecordVideoActivity : AppCompatActivity() {
     }
 
     private fun getCameraFragment() : RecordVideoFragment? {
-        val fragment: Fragment? = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        val fragment: Fragment? = supportFragmentManager.findFragmentById(R.id.fragment_record_container)
         fragment?.let {
             val fragments = it.childFragmentManager.fragments
             if (fragments != null && fragments.size > 0) {
