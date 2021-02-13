@@ -72,6 +72,7 @@ class RecordVideoActivity : AppCompatActivity() {
         val uri = getVideoUri()
         uri?.let {
             resultIntent.putExtra(KEY_VIDEO_URI, uri)
+            resultIntent.flags = Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
             setResult(Activity.RESULT_OK, resultIntent)
         }
     }
