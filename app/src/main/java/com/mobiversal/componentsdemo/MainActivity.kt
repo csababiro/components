@@ -37,7 +37,11 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -50,10 +54,13 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
     private fun startRecordVideoActivity() {
         val params = RecordVideoParams(
             "Where do you see yourself in a year and why?",
-            5000,
+            0,
             "Title",
             "Min 5 seconds",
-            "OK"
+            "OK",
+            "",
+            "",
+            ""
         )
         RecordVideoActivity.openForResult(this, REQUEST_CODE_RECORD_VIDEO, params)
     }
@@ -118,8 +125,12 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_CODE_RECORD_VIDEO &&
-                resultCode == Activity.RESULT_OK)
-        Log.d("TEST", "Video recording uri returned: " + data?.getParcelableExtra(KEY_VIDEO_URI))
+        if (requestCode == REQUEST_CODE_RECORD_VIDEO &&
+            resultCode == Activity.RESULT_OK
+        )
+            Log.d(
+                "TEST",
+                "Video recording uri returned: " + data?.getParcelableExtra(KEY_VIDEO_URI)
+            )
     }
 }

@@ -19,10 +19,9 @@ package com.mobiversal.videocapture
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.AssetFileDescriptor
 import android.content.res.Configuration
-import android.graphics.Color
 import android.graphics.ImageFormat
-import android.graphics.drawable.ColorDrawable
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.params.StreamConfigurationMap
@@ -49,8 +48,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onDismiss
-import com.android.example.cameraxbasic.utils.ANIMATION_FAST_MILLIS
-import com.android.example.cameraxbasic.utils.ANIMATION_SLOW_MILLIS
 import com.mobiversal.circularcountdown.CircularCountDownView
 import com.mobiversal.circularcountdown.CountDownListener
 import java.io.File
@@ -216,8 +213,9 @@ class RecordVideoFragment : Fragment() {
         Log.d(TAG, "Screen metrics: ${metrics.widthPixels} x ${metrics.heightPixels}")
 
         val screenAspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
-        val screenSize = Size(metrics.widthPixels, metrics.heightPixels)// getVideoSize()
-        test()
+        val screenSize = Size(metrics.widthPixels, metrics.heightPixels)
+        //getVideoSize() TODO
+        //test() TODO
         Log.d(TAG, "Preview aspect ratio: $screenAspectRatio")
 
         val rotation = viewFinder.display.rotation
@@ -233,6 +231,7 @@ class RecordVideoFragment : Fragment() {
         preview = Preview.Builder()
             // We request aspect ratio but no resolution
             .setTargetAspectRatio(screenAspectRatio)
+            //.setTargetResolution(Size(1228, 1632))
             //.setTargetResolution(screenSize)
             // Set initial target rotation
             .setTargetRotation(rotation)
@@ -244,6 +243,7 @@ class RecordVideoFragment : Fragment() {
             // We request aspect ratio but no resolution to match preview config, but letting
             // CameraX optimize for whatever specific resolution best fits our use cases
             .setTargetAspectRatio(screenAspectRatio)
+            //.setTargetResolution(Size(1228, 1632))
             //.setTargetResolution(screenSize)
             // Set initial target rotation, we will have to call this again if rotation changes
             // during the lifecycle of this use case
@@ -311,15 +311,13 @@ class RecordVideoFragment : Fragment() {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 savedUri = null
                 true
-            }
-            else
+            } else
                 false
         }
 
 
         initRecordButtonListener(controls)
     }
-
 
 
     private var lastDown: Long = 0
@@ -385,7 +383,11 @@ class RecordVideoFragment : Fragment() {
                         videoSaved(outputFileResults, photoFile)
                     }
 
-                    override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
+                    override fun onError(
+                        videoCaptureError: Int,
+                        message: String,
+                        cause: Throwable?
+                    ) {
                         Log.d("TEST", "startRecording: error $videoCaptureError $message")
                         cause?.printStackTrace()
                     }
@@ -424,23 +426,73 @@ class RecordVideoFragment : Fragment() {
             Log.d(TAG, "Video recording scanned into media store: $uri")
         }
 
-        if (recordingElapsedMillis > RecordVideoActivity.videoParams.minVideoLengthMillis)
-            finishActivity()
+        if (!isVideoSavedCorrectly(savedUri))
+            showCameraBlockedPopup()
         else
-            showTheVideoIsTooShortPopup()
+            if (recordingElapsedMillis > RecordVideoActivity.videoParams.minVideoLengthMillis)
+                finishActivity()
+            else
+                showTheVideoIsTooShortPopup()
+    }
+
+    private fun isVideoSavedCorrectly(uri: Uri): Boolean {
+        context?.let { nonNullContext ->
+            val fileDescriptor: AssetFileDescriptor? = nonNullContext.contentResolver.openAssetFileDescriptor(uri, "r")
+            fileDescriptor?.let {
+                val fileSize: Long = it.length
+                Log.d("TEST", "File size $fileSize")
+                return fileSize > 0
+            }
+        }
+
+        return false
     }
 
     private fun showTheVideoIsTooShortPopup() {
+        val title = RecordVideoActivity.videoParams.minVideoErrorTitle
+        val description = RecordVideoActivity.videoParams.minVideoErrorDescription
+        val positive = RecordVideoActivity.videoParams.minVideoErrorPositiveButton
+
+        showPopup(title, description, positive)
+    }
+
+    private fun showCameraBlockedPopup() {
+        var title = RecordVideoActivity.videoParams.minCameraBlockedErrorTitle
+        var description = RecordVideoActivity.videoParams.minCameraBlockedErrorDescription
+        var positive = RecordVideoActivity.videoParams.minCameraBlockedPositiveButton
+
+        if(title.isEmpty())
+            title = getString(R.string.camera_blocked_title)
+
+        if(description.isEmpty())
+            description = getString(R.string.camera_blocked_description)
+
+        if(positive.isEmpty())
+            positive = getString(R.string.camera_blocked_positive)
+
+        showPopup(title, description, positive, ::closeScreenBecauseOfCameraBlockedError)
+    }
+
+    private fun closeScreenBecauseOfCameraBlockedError() {
+        savedUri = null
+        finishActivity()
+    }
+
+    private fun showPopup(title: String, description: String, positive: String, action: (() -> Unit)? = null) {
         activity?.let { activity ->
             activity.runOnUiThread {
-                val title = RecordVideoActivity.videoParams.minVideoErrorTitle
-                val description = RecordVideoActivity.videoParams.minVideoErrorDescription
                 MaterialDialog(activity)
                     .cancelable(true)
                     .title(text = title)
-                    .positiveButton(text = "OK")
+                    .positiveButton(text = positive)
                     .message(text = description)
-                    .onDismiss { circularCountDownView?.resetCircleDrawing() }
+                    .onDismiss {
+                        action?.let {
+                            action.invoke()
+                        } ?: kotlin.run {
+                            circularCountDownView?.resetCircleDrawing()
+                        }
+                    }
                     .show()
             }
         }
@@ -485,15 +537,19 @@ class RecordVideoFragment : Fragment() {
 
     private fun test() {
         context?.let {
-            val cameraManager: CameraManager = it.getSystemService(Context.CAMERA_SERVICE) as CameraManager
+            val cameraManager: CameraManager =
+                it.getSystemService(Context.CAMERA_SERVICE) as CameraManager
 
             cameraManager.cameraIdList.forEach {
 
-                val cameraCharacteristics: CameraCharacteristics = cameraManager.getCameraCharacteristics(it)
+                val cameraCharacteristics: CameraCharacteristics =
+                    cameraManager.getCameraCharacteristics(it)
 
-                val streamConfigurationMap: StreamConfigurationMap? = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
+                val streamConfigurationMap: StreamConfigurationMap? =
+                    cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
 
-                val sizes: Array<Size>? = streamConfigurationMap?.getOutputSizes(ImageFormat.RAW_SENSOR)
+                val sizes: Array<Size>? =
+                    streamConfigurationMap?.getOutputSizes(ImageFormat.RAW_SENSOR)
 
                 sizes?.forEach { size ->
                     Log.d("TEST", "Camera resolution: ${size.width} - ${size.height}")
