@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Handler
+import android.os.Looper
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.Log
@@ -100,7 +101,7 @@ class CircularCountDownView @JvmOverloads constructor(
         currentTime = startTime
 
         // This will ensure the animation will run periodically
-        viewHandler = Handler()
+        viewHandler = Handler(Looper.getMainLooper())
         updateView = Runnable { // update current time
             currentTime = System.currentTimeMillis()
 
@@ -119,8 +120,10 @@ class CircularCountDownView @JvmOverloads constructor(
     }
 
     fun stopCircleDrawing() {
-        updateView?.let { updateView ->
-            viewHandler?.removeCallbacks(updateView)
+        updateView?.let {
+            viewHandler?.removeCallbacks(it)
+            updateView = null
+            viewHandler = null
         }
     }
 
@@ -134,24 +137,25 @@ class CircularCountDownView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        // get the center of the view
-        val centerWidth = (canvas!!.width / 2).toFloat()
-        val centerHeight = (canvas!!.height / 2).toFloat()
+        canvas?.let {
+            // get the center of the view
+            val centerWidth = (it!!.width / 2).toFloat()
+            val centerHeight = (it!!.height / 2).toFloat()
 
 
-        // set bound of our circle in the middle of the view
-        circleBounds!![centerWidth - radius, centerHeight - radius, centerWidth + radius] =
-            centerHeight + radius
+            // set bound of our circle in the middle of the view
+            circleBounds!![centerWidth - radius, centerHeight - radius, centerWidth + radius] =
+                centerHeight + radius
 
 
-        // we want to start at -90°, 0° is pointing to the right
-        canvas!!.drawArc(
-            circleBounds!!,
-            (-90).toFloat(),
-            (progress * 360).toFloat(),
-            false,
-            progressPaint!!
-        )
+            // we want to start at -90°, 0° is pointing to the right
+            it.drawArc(
+                circleBounds!!,
+                (-90).toFloat(),
+                (progress * 360).toFloat(),
+                false,
+                progressPaint!!
+            )
 
 //        // display text inside the circle
 //        canvas!!.drawText(
@@ -160,5 +164,6 @@ class CircularCountDownView @JvmOverloads constructor(
 //            centerHeight + textOffset,
 //            textPaint!!
 //        )
+        }
     }
 }

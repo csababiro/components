@@ -54,7 +54,7 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
     private fun startRecordVideoActivity() {
         val params = RecordVideoParams(
             "Where do you see yourself in a year and why?",
-            0,
+            2000,
             "Title",
             "Min 5 seconds",
             "OK",
