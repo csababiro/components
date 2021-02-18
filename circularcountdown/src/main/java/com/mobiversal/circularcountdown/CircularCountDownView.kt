@@ -17,7 +17,7 @@ import android.view.View
  */
 // inspired from: https://stackoverflow.com/questions/14529010/how-can-i-program-a-rotating-circular-animation-such-as-this-one-picture-attach
 
-private const val DEFAULT_DURATION_MILLIS = 15000L
+const val DEFAULT_DURATION_MILLIS = 15000L
 
 class CircularCountDownView @JvmOverloads constructor(
     context: Context,
