@@ -377,7 +377,7 @@ class RecordVideoFragment : Fragment() {
                 //.setMetadata(metadata) TODO
                 .build()
 
-            videoCapture.startRecording(
+            videoCapture?.startRecording( // null issues from crashlytics
                 outputOptions,
                 cameraExecutor,
                 object : VideoCapture.OnVideoSavedCallback {

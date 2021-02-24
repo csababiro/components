@@ -1,30 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/edit_text_underline_normal</item>
-        <item name="colorControlActivated">@color/edit_text_underline_focused</item>
-        <item name="android:itemBackground">@color/colorPrimary</item>
-        <item name="android:itemTextAppearance">@style/ItemMenuTextAppearance</item>
-        <!--<item name="android:actionMenuTextColor">@color/toolbar_title</item>-->
-        <!--<item name="windowContentTransitions">true</item>-->
-    </style>
-
-    <style name="ButtonsCropVideo" parent="AppTheme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">14dp</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
-    <style name="TextViewLabelCropVideo" parent="AppTheme">
+    <style name="TextViewLabelCropVideo" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorAccent</item>
@@ -33,7 +9,7 @@
 
     </style>
 
-    <style name="SpinnerSeparator" parent="AppTheme">
+    <style name="SpinnerSeparator" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">:</item>
@@ -42,7 +18,7 @@
     </style>
 
     <!-- Tabor app -->
-    <style name="CustomTimePickerSeparator" parent="AppTheme">
+    <style name="CustomTimePickerSeparator" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">:</item>
