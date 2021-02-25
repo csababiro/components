@@ -18,6 +18,7 @@
         <item name="enableCheckBoxRippleSCB">false</item>
     </style>
 
+
     <style name="TermsStyleTxt" parent="AppTheme">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/font_size_14</item>
