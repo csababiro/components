@@ -33,6 +33,8 @@ private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA, Manifest.
  */
 class PermissionsFragment : Fragment() {
 
+    private var permissionsRequestDenied = 0
+
     override fun onResume() {
         super.onResume()
 
@@ -57,6 +59,9 @@ class PermissionsFragment : Fragment() {
                         PermissionsFragmentDirections.actionPermissionsToCamera())
             } else {
                 Toast.makeText(context, "Permission request denied", Toast.LENGTH_LONG).show()
+                permissionsRequestDenied++
+                if(permissionsRequestDenied > 5)
+                    activity?.finish()
             }
         }
     }
