@@ -58,7 +58,6 @@ class PermissionsFragment : Fragment() {
                 Navigation.findNavController(requireActivity(), R.id.fragment_container).navigate(
                         PermissionsFragmentDirections.actionPermissionsToCamera())
             } else {
-                Toast.makeText(context, "Permission request denied", Toast.LENGTH_LONG).show()
                 permissionsRequestDenied++
                 if(permissionsRequestDenied > 5)
                     activity?.finish()
