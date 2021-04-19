@@ -125,6 +125,7 @@ class MainActivity : ParentActivity(), NavigationView.OnNavigationItemSelectedLi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == REQUEST_CODE_RECORD_VIDEO &&
             resultCode == Activity.RESULT_OK
         )
