@@ -10,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 data class RecordVideoParams(
     val description: String,
     val minVideoLengthMillis: Long,
+    val maxVideoLengthMillis: Long,
     val minVideoErrorTitle: String,
     val minVideoErrorDescription: String,
     val minVideoErrorPositiveButton: String,

@@ -50,7 +50,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.mobiversal.circularcountdown.CircularCountDownView
 import com.mobiversal.circularcountdown.CountDownListener
-import com.mobiversal.circularcountdown.DEFAULT_DURATION_MILLIS
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -333,11 +332,13 @@ class RecordVideoFragment : Fragment() {
         }
 
         circularCountDownView = controls.findViewById(R.id.circularCountDown)
+        val maxVideoDurationMillis = RecordVideoActivity.videoParams.maxVideoLengthMillis
+        circularCountDownView?.changeDuration(maxVideoDurationMillis)
         circularCountDownView?.countDownListener = object : CountDownListener {
             override fun countDown(millis: Long) {
                 Log.d("TEST", "Millis: $millis")
                 recordingElapsedMillis = millis
-                if(millis > DEFAULT_DURATION_MILLIS - 200 && recording) // 200 error range
+                if(millis > maxVideoDurationMillis - 200 && recording) // 200 error range
                     stopRecording()
             }
         }

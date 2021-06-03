@@ -18,13 +18,15 @@ import android.view.View
  */
 // inspired from: https://stackoverflow.com/questions/14529010/how-can-i-program-a-rotating-circular-animation-such-as-this-one-picture-attach
 
-const val DEFAULT_DURATION_MILLIS = 15000L
+private const val DEFAULT_DURATION_MILLIS = 15000L
 
 class CircularCountDownView @JvmOverloads constructor(
     context: Context,
     val attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    var durationMillis = DEFAULT_DURATION_MILLIS
 
     private var progressPaint: Paint? = null
     private var textPaint: Paint? = null
@@ -50,6 +52,11 @@ class CircularCountDownView @JvmOverloads constructor(
         initView()
     }
 
+    fun changeDuration(newDuration: Long) {
+        durationMillis = newDuration
+        initView()
+    }
+
     private fun initView() {
         initCircleBounds()
         initMaxTime()
@@ -64,7 +71,7 @@ class CircularCountDownView @JvmOverloads constructor(
 
     private fun initMaxTime() {
         // limit the counter to go up to maxTime ms
-        maxTime = DEFAULT_DURATION_MILLIS
+        maxTime = durationMillis
     }
 
     private fun initCircleStyle() {
