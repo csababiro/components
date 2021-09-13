@@ -9,6 +9,7 @@ import android.app.Application
  */
 class App : Application()//, CameraXConfig.Provider {
 {
+
 //    override fun getCameraXConfig(): CameraXConfig {
 //        return Camera2Config.defaultConfig()
 //    }
